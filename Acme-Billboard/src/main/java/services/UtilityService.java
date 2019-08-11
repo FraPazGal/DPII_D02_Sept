@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -71,6 +73,17 @@ public class UtilityService {
 		final String hash = encoder.encodePassword(text, null);
 		// TODO Auto-generated method stub
 		return hash;
+	}
+	
+	public Collection<String> typeOfFile() {
+		Collection<String> result = new ArrayList<>();
+		result.add("Billboard");
+		result.add("TV");
+		result.add("Radio");
+		result.add("SocialNetwork");
+		result.add("Info");
+		
+		return result;
 	}
 
 }

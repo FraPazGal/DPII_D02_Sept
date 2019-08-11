@@ -25,14 +25,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import services.ActorService;
 import services.ContractService;
-import services.FileService;
+import services.BillboardFileService;
 import services.FinderService;
 import services.PackageService;
 import services.RequestService;
 import domain.Administrator;
 import domain.Contract;
 import domain.Customer;
-import domain.File;
+import domain.BillboardFile;
 import domain.Manager;
 import domain.Request;
 
@@ -46,7 +46,7 @@ public class ExportDataController extends AbstractController {
 	@Autowired
 	private ContractService	contractService;
 	@Autowired
-	private FileService		fileService;
+	private BillboardFileService		billboardFileService;
 	@Autowired
 	private FinderService	finderService;
 	@Autowired
@@ -124,7 +124,7 @@ public class ExportDataController extends AbstractController {
 			final Collection<Contract> contracts = this.contractService.getListAll();
 
 			for (final Contract c : contracts) {
-				final Collection<File> files = this.fileService.getListAllByContract(c.getId());
+				final Collection<BillboardFile> billboardFiles = this.billboardFileService.getListAllByContract(c.getId());
 				res += "----------------------------------------";
 				res += "\r\n\r\n";
 				res += "Contract: " + "\r\n\r\n";
@@ -133,7 +133,7 @@ public class ExportDataController extends AbstractController {
 				res += "Text:  " + c.getText() + "\r\n\r\n";
 				res += "Pack: " + c.getRequest().getPack().getTitle() + "\r\n\r\n";
 				res += "Files: " + "\r\n\r\n";
-				for (final File f : files) {
+				for (final BillboardFile f : billboardFiles) {
 					res += "Location: " + f.getLocation() + "\r\n\r\n";
 					res += "Image: " + f.getImage() + "\r\n\r\n";
 				}
@@ -197,7 +197,7 @@ public class ExportDataController extends AbstractController {
 			final Collection<Contract> contracts = this.contractService.getListAll();
 
 			for (final Contract c : contracts) {
-				final Collection<File> files = this.fileService.getListAllByContract(c.getId());
+				final Collection<BillboardFile> billboardFiles = this.billboardFileService.getListAllByContract(c.getId());
 				res += "----------------------------------------";
 				res += "\r\n\r\n";
 				res += "Contract: " + "\r\n\r\n";
@@ -206,7 +206,7 @@ public class ExportDataController extends AbstractController {
 				res += "Text:  " + c.getText() + "\r\n\r\n";
 				res += "Pack: " + c.getRequest().getPack().getTitle() + "\r\n\r\n";
 				res += "Files: " + "\r\n\r\n";
-				for (final File f : files) {
+				for (final BillboardFile f : billboardFiles) {
 					res += "Location: " + f.getLocation() + "\r\n\r\n";
 					res += "Image: " + f.getImage() + "\r\n\r\n";
 				}

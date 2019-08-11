@@ -21,7 +21,14 @@
 		<value>/views/customer/tiles.xml</value>
 		<value>/views/profile/tiles.xml</value>
 		<value>/views/contract/tiles.xml</value>
+		
+		<value>/views/billboardFile/tiles.xml</value>
+		<value>/views/socialNetworkFile/tiles.xml</value>
+		<value>/views/TVFile/tiles.xml</value>
+		<value>/views/radioFile/tiles.xml</value>
+		<value>/views/infoFile/tiles.xml</value>
 		<value>/views/file/tiles.xml</value>
+		
 		<value>/views/finder/tiles.xml</value>
 		<value>/views/manager/tiles.xml</value>
 		<value>/views/package/tiles.xml</value>

@@ -16,7 +16,7 @@ import org.springframework.validation.Validator;
 import repositories.ContractRepository;
 import domain.Actor;
 import domain.Contract;
-import domain.File;
+import domain.BillboardFile;
 import domain.Manager;
 import domain.Request;
 
@@ -27,7 +27,7 @@ public class ContractService {
 	@Autowired
 	private RequestService		requestService;
 	@Autowired
-	private FileService			fileService;
+	private BillboardFileService			billboardFileService;
 
 	@Autowired
 	private ContractRepository	contractRepository;
@@ -103,8 +103,8 @@ public class ContractService {
 		Contract contract = this.contractRepository.findOne(id);
 		Assert.notNull(contract);
 		Assert.isTrue(contract.getRequest().getCustomer().equals(principal) || contract.getRequest().getPack().getManager().equals(principal));
-		final Collection<File> files = this.fileService.getListAllByContract(id);
-		Assert.isTrue(files.size() >= 1, "file.one");
+		final Collection<BillboardFile> billboardFiles = this.billboardFileService.getListAllByContract(id);
+		Assert.isTrue(billboardFiles.size() >= 1, "file.one");
 		final Date signed = new Date();
 		if (this.actorService.checkAuthority(principal, "CUSTOMER")) {
 			Assert.isTrue(contract.getSignedCustomer() == null && contract.getSignedManager() != null);
@@ -199,7 +199,7 @@ public class ContractService {
 		final Collection<Contract> con = this.contractRepository.findAllContract(r.getId());
 		if (!con.isEmpty())
 			for (final Contract c : con)
-				this.fileService.deleteAccount(c);
+				this.billboardFileService.deleteAccount(c);
 		this.contractRepository.deleteInBatch(con);
 	}
 

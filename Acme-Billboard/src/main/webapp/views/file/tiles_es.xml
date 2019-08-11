@@ -15,17 +15,8 @@
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
       
 <tiles-definitions>
-	<definition name="file/edit" extends="master.page">	
-		<put-attribute name="title" value="Editar archivo" />
-		<put-attribute name="body" value="/views/file/edit.jsp" />
-	</definition>
-	
-	<definition name="file/display" extends="master.page">	
-		<put-attribute name="title" value="Mostrar archivo" />
-		<put-attribute name="body" value="/views/file/display.jsp" />
-	</definition>
-		<definition name="file/list" extends="master.page">	
-		<put-attribute name="title" value="Listar archivo" />
-		<put-attribute name="body" value="/views/file/list.jsp" />
+	<definition name="file/selector" extends="master.page">	
+		<put-attribute name="title" value="Tipo de archivo" />
+		<put-attribute name="body" value="/views/file/selector.jsp" />
 	</definition>
 </tiles-definitions>

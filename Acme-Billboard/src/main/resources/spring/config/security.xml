@@ -61,7 +61,18 @@
 		
 		<security:intercept-url pattern="/contract/**" access="hasAnyRole('MANAGER','CUSTOMER')" /> 
 		<security:intercept-url pattern="/request/**" access="hasAnyRole('MANAGER','CUSTOMER')" /> 
-		<security:intercept-url pattern="/file/**" access="hasAnyRole('MANAGER','CUSTOMER')" /> 
+		
+		<security:intercept-url pattern="/file/**" access="hasAnyRole('MANAGER')" /> 
+		<security:intercept-url pattern="/billboardFile/display.do" access="hasAnyRole('MANAGER','CUSTOMER')" /> 
+		<security:intercept-url pattern="/billboardFile/edit.do" access="hasAnyRole('MANAGER')" /> 
+		<security:intercept-url pattern="/socialNetworkFile/display.do" access="hasAnyRole('MANAGER','CUSTOMER')" /> 
+		<security:intercept-url pattern="/socialNetworkFile/edit.do" access="hasAnyRole('MANAGER')" /> 
+		<security:intercept-url pattern="/radioFile/display.do" access="hasAnyRole('MANAGER','CUSTOMER')" /> 
+		<security:intercept-url pattern="/radioFile/edit.do" access="hasAnyRole('MANAGER')" /> 
+		<security:intercept-url pattern="/TVFile/display.do" access="hasAnyRole('MANAGER','CUSTOMER')" /> 
+		<security:intercept-url pattern="/TVFile/edit.do" access="hasAnyRole('MANAGER')" /> 
+		<security:intercept-url pattern="/infoFile/display.do" access="hasAnyRole('MANAGER','CUSTOMER')" /> 
+		<security:intercept-url pattern="/infoFile/edit.do" access="hasAnyRole('MANAGER')" /> 
 		
 		<security:intercept-url pattern="/finder/customer/**" access="hasRole('CUSTOMER')" /> 
 		<security:intercept-url pattern="/finder/anon/**" access="permitAll" /> 

@@ -11,7 +11,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.BillboardFileService;
 import services.ContractService;
+import services.InfoFileService;
+import services.RadioFileService;
+import services.SocialNetworkFileService;
+import services.TVFileService;
 import domain.Contract;
 
 @Controller
@@ -22,6 +27,21 @@ public class ContractController extends AbstractController {
 
 	@Autowired
 	private ContractService	contractService;
+	
+	@Autowired
+	private BillboardFileService	billboardFileService;
+	
+	@Autowired
+	private SocialNetworkFileService	socialNetworkFileService;
+	
+	@Autowired
+	private InfoFileService	infoFileService;
+	
+	@Autowired
+	private TVFileService	TVFileService;
+	
+	@Autowired
+	private RadioFileService	radioFileService;
 
 
 	//List ----------------------------------------------------------------
@@ -66,9 +86,14 @@ public class ContractController extends AbstractController {
 		ModelAndView result;
 		Contract contract;
 		try {
-			contract = this.contractService.findOneByRequestAndOwner(Id);
+			contract = this.contractService.findOne(Id);
 			result = new ModelAndView("contract/display");
 			result.addObject("contract", contract);
+			result.addObject("billboardFiles", this.billboardFileService.getListAllByContract(Id));
+			result.addObject("infoFiles", this.infoFileService.getListAllByContract(Id));
+			result.addObject("TVFiles", this.TVFileService.getListAllByContract(Id));
+			result.addObject("radioFiles", this.radioFileService.getListAllByContract(Id));
+			result.addObject("socialNetworkFiles", this.socialNetworkFileService.getListAllByContract(Id));
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 			result.addObject("messageCode", "commit.error");
@@ -106,7 +131,7 @@ public class ContractController extends AbstractController {
 				result.addObject("contract", contractF);
 			} else {
 				contract = this.contractService.save(contract);
-				result = new ModelAndView("contract/display");
+				result = new ModelAndView("redirect:/contract/display.do?Id=" + contract.getId());
 				result.addObject("contract", contract);
 			}
 		} catch (final Throwable oops) {

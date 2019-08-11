@@ -24,7 +24,7 @@ import domain.Request;
 public class RequestService {
 
 	@Autowired
-	private FileService			fileService;
+	private BillboardFileService			billboardFileService;
 
 	@Autowired
 	private ContractService		contractService;

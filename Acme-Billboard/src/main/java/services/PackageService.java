@@ -97,7 +97,7 @@ public class PackageService {
 		final domain.Package pack = this.findOne(id);
 		Assert.notNull(pack);
 		Assert.isTrue(pack.getId() != 0);
-		Assert.isTrue(pack.getManager() == false);
+		//Assert.isTrue(pack.getManager() == false);
 		Assert.isTrue(pack.getManager().equals(principal));
 		this.packageRepository.delete(pack);
 	}

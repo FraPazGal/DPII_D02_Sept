@@ -68,7 +68,7 @@
 
 		<jstl:if test="${not empty packages}">
 			<display:table name="packages" id="row" requestURI="finder/customer/list.do"
-				pagesize="1" class="displaytag">
+				pagesize="10" class="displaytag">
 
 				<!-- Attributes-->
 				<display:column titleKey="package.ticker" sortable="true">
@@ -152,7 +152,7 @@
 	<br>
 	<jstl:if test="${not empty packages}">
 		<display:table name="packages" id="row" requestURI="finder/anon/search.do"
-			pagesize="1" class="displaytag">
+			pagesize="10" class="displaytag">
 
 			<!-- Attributes-->
 			<display:column titleKey="package.ticker" sortable="true">

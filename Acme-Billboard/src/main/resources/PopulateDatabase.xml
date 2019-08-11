@@ -177,7 +177,7 @@
 	<!-- PACKAGES -->
 	<bean id="package1" class="domain.Package">
 		<property name="ticker" value="YF54TF-89654" />
-		<property name="title" value="This is my best billboard" />
+		<property name="title" value="This is my best billboard man1" />
 		<property name="description" value="A billboard 3x4 m" />
 		<property name="startDate" value="08/10/2019 10:00" />
 		<property name="endDate" value="08/10/2020 10:00" />
@@ -189,7 +189,7 @@
 
 	<bean id="package2" class="domain.Package">
 		<property name="ticker" value="YF54TF-79654" />
-		<property name="title" value="This is my second best billboard" />
+		<property name="title" value="This is my second best billboard man1" />
 		<property name="description" value="A billboard 3x4 m" />
 		<property name="startDate" value="08/11/2019 10:00" />
 		<property name="endDate" value="08/12/2019 10:00" />
@@ -201,7 +201,7 @@
 
 	<bean id="package3" class="domain.Package">
 		<property name="ticker" value="YF54TF-69654" />
-		<property name="title" value="This is my  worst billboard" />
+		<property name="title" value="This is my  worst billboard man1" />
 		<property name="description" value="A billboard 3x4 m" />
 		<property name="startDate" value="08/01/2020 10:00" />
 		<property name="endDate" value="08/10/2020 10:00" />
@@ -213,7 +213,7 @@
 
 	<bean id="package4" class="domain.Package">
 		<property name="ticker" value="YF54TF-59654" />
-		<property name="title" value="This is my best billboard" />
+		<property name="title" value="This is my best billboard man2" />
 		<property name="description" value="A billboard 3x4 m" />
 		<property name="startDate" value="08/08/2020 10:00" />
 		<property name="endDate" value="08/10/2020 10:00" />
@@ -225,7 +225,7 @@
 
 	<bean id="package5" class="domain.Package">
 		<property name="ticker" value="YF54TF-49654" />
-		<property name="title" value="This is my second best billboard" />
+		<property name="title" value="This is my second best billboard man2" />
 		<property name="description" value="A billboard 3x4 m" />
 		<property name="startDate" value="08/10/2019 10:00" />
 		<property name="endDate" value="08/10/2020 10:00" />
@@ -290,23 +290,116 @@
 	</bean>
 
 	<bean id="contract2" class="domain.Contract">
-		<property name="signedCustomer" value="01/07/2019 20:48" />
-		<property name="signedManager" value="01/07/2019 19:48" />
 		<property name="text" value="Text predefined" />
 		<property name="hash" value="5f71a4931538f5747141d0d2f5949355" />
 		<property name="request" ref="request3" />
 	</bean>
-	<!-- FILES -->
+	
+	<!-- BILLBOARD FILES -->
 
-	<bean id="file1" class="domain.File">
+	<bean id="billboardFile1" class="domain.BillboardFile">
+		<property name="fileType" value="BILLBOARD" />
 		<property name="location" value="In the right" />
 		<property name="image" value="https://i.ibb.co/kGgVz69/Untitled.png" />
 		<property name="contract" ref="contract2" />
 	</bean>
 
-	<bean id="file2" class="domain.File">
-		<property name="location" value="In the left" />
-		<property name="image" value="https://i.ibb.co/kGgVz69/Untitled.png" />
+	<!-- INFO FILES -->
+
+	<bean id="infoFile1" class="domain.InfoFile">
+		<property name="fileType" value="INFO" />
+		<property name="title" value="Info file 1 title" />
+		<property name="text" value="Info file 1 very very very very long text" />
+		<property name="contract" ref="contract2" />
+	</bean>
+
+	<bean id="infoFile2" class="domain.InfoFile">
+		<property name="fileType" value="INFO" />
+		<property name="title" value="Info file 2 title" />
+		<property name="text" value="Info file 2 very very very very long text" />
+		<property name="contract" ref="contract2" />
+	</bean>
+	
+	<bean id="infoFile3" class="domain.InfoFile">
+		<property name="fileType" value="INFO" />
+		<property name="title" value="Info file 3 title" />
+		<property name="text" value="Info file 3 very very very very long text" />
+		<property name="contract" ref="contract1" />
+	</bean>
+	
+	<!-- SOCIALNETWORK FILES -->
+
+	<bean id="socialNetworkFile1" class="domain.SocialNetworkFile">
+		<property name="fileType" value="SOCIALNETWORK" />
+		<property name="banner" value="https://i-cdn.phonearena.com/images/article/104992-two_lead/Twitter-details-its-new-API-breaks-certain-features-of-third-party-Twitter-apps.jpg" />
+		<property name="target" value="https://www.twitter.com" />
+		<property name="contract" ref="contract2" />
+	</bean>
+
+	<bean id="socialNetworkFile2" class="domain.SocialNetworkFile">
+		<property name="fileType" value="SOCIALNETWORK" />
+		<property name="banner" value="https://www.trecebits.com/wp-content/uploads/2013/06/facebook.jpg" />
+		<property name="target" value="https://www.facebook.com" />
+		<property name="contract" ref="contract2" />
+	</bean>
+	
+	<!-- RADIO FILES -->
+
+	<bean id="radioFile1" class="domain.RadioFile">
+		<property name="fileType" value="RADIO" />
+		<property name="broadcasterName" value="Ni lo sé, ni me importa" />
+		<property name="schedule" value="De lunes a viernes a las 8:00 am" />
+		<property name="sound" value="https://www.fakeurlsound.com" />
+		<property name="contract" ref="contract2" />
+	</bean>
+
+	<bean id="radioFile2" class="domain.RadioFile">
+		<property name="fileType" value="RADIO" />
+		<property name="broadcasterName" value="Ni siquiera sé el nombre de la emisora" />
+		<property name="schedule" value="Todos los días a las 20:30" />
+		<property name="sound" value="https://www.fakeurlsound.com" />
+		<property name="contract" ref="contract2" />
+	</bean>
+	
+	<bean id="radioFile3" class="domain.RadioFile">
+		<property name="fileType" value="RADIO" />
+		<property name="broadcasterName" value="Pato Donalds" />
+		<property name="schedule" value="Todos los días a las 1:00 am" />
+		<property name="sound" value="https://www.fakeurlsound.com" />
+		<property name="contract" ref="contract1" />
+	</bean>
+	
+	<bean id="radioFile4" class="domain.RadioFile">
+		<property name="fileType" value="RADIO" />
+		<property name="broadcasterName" value="COPE" />
+		<property name="schedule" value="Todos los días a las 1:00 am" />
+		<property name="sound" value="https://www.fakeurlsound.com" />
+		<property name="contract" ref="contract1" />
+	</bean>
+	
+	<!-- TV FILES -->
+
+	<bean id="TVFile1" class="domain.TVFile">
+		<property name="fileType" value="TV" />
+		<property name="broadcasterName" value="Y a quién le importa?" />
+		<property name="schedule" value="S y D 10:10" />
+		<property name="video" value="https://www.fakeurlvideo.com" />
+		<property name="contract" ref="contract2" />
+	</bean>
+
+	<bean id="TVFile2" class="domain.TVFile">
+		<property name="fileType" value="TV" />
+		<property name="broadcasterName" value="Ni siquiera sé el nombre de la cadena" />
+		<property name="schedule" value="L-V a las 14:25" />
+		<property name="video" value="https://www.fakeurlvideo.com" />
+		<property name="contract" ref="contract2" />
+	</bean>
+	
+	<bean id="TVFile3" class="domain.TVFile">
+		<property name="fileType" value="TV" />
+		<property name="broadcasterName" value="DMAX" />
+		<property name="schedule" value="L-D todo el día" />
+		<property name="video" value="https://www.fakeurlvideo.com" />
 		<property name="contract" ref="contract2" />
 	</bean>
 

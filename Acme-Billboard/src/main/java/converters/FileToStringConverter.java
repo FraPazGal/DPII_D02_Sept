@@ -6,14 +6,14 @@ import javax.transaction.Transactional;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import domain.File;
+import domain.BillboardFile;
 
 @Component
 @Transactional
-public class FileToStringConverter implements Converter<File, String> {
+public class FileToStringConverter implements Converter<BillboardFile, String> {
 
 	@Override
-	public String convert(final File entity) {
+	public String convert(final BillboardFile entity) {
 		String result;
 
 		if (entity == null)

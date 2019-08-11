@@ -38,7 +38,7 @@
 			</display:column>
 			<!-- Action links -->
 			<display:column>
-				<a href="contract/display.do?Id=${row.request.id}"> <spring:message
+				<a href="contract/display.do?Id=${row.id}"> <spring:message
 						code="contract.display" />
 				</a>
 			</display:column>

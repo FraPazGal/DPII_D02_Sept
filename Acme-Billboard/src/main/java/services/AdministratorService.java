@@ -32,9 +32,6 @@ public class AdministratorService {
 	private ActorService				actorService;
 
 	@Autowired
-	private UtilityService				utilityService;
-
-	@Autowired
 	private SystemConfigurationService	systemConfigurationService;
 
 

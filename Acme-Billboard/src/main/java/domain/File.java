@@ -7,36 +7,26 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.URL;
 
 @Entity
 @Access(AccessType.PROPERTY)
 public class File extends DomainEntity {
 
-	private String		location;
-	private String		image;
+	private String		fileType;
 	private Contract	contract;
 
 
 	@NotBlank
-	public String getLocation() {
-		return this.location;
+	@Pattern(regexp = "\\b(BILLBOARD|INFO|RADIO|TV|SOCIALNETWORK)\\b")
+	public String getFileType() {
+		return this.fileType;
 	}
 
-	public void setLocation(final String location) {
-		this.location = location;
-	}
-
-	@NotBlank
-	@URL
-	public String getImage() {
-		return this.image;
-	}
-
-	public void setImage(final String image) {
-		this.image = image;
+	public void setFileType(final String fileType) {
+		this.fileType = fileType;
 	}
 
 	@Valid

@@ -7,6 +7,7 @@
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 <security:authorize access="hasRole('MANAGER')">
 	<fieldset style="width: 35%">
@@ -43,29 +44,270 @@
 	</fieldset>
 	<br />
 	<jstl:if test="${empty contract.signedManager}">
-		<a href="contract/edit.do?Id=${contract.request.id}"> <spring:message
-				code="contract.edit" />
-		</a>
-		<br />
-
-		<a href="contract/sign.do?Id=${contract.id}"> <spring:message
-				code="contract.sign" />
-		</a>
-		<br />
-		<a href="file/create.do?Id=${contract.id}"> <spring:message
-				code="file.create" />
-		</a>
+		<acme:cancel code="contract.sign" url="contract/sign.do?Id=${contract.id}" />&nbsp;
+		<acme:cancel code="contract.edit" url="contract/edit.do?Id=${contract.request.id}" /><br><br>
+		<acme:cancel code="file.create" url="file/selector.do?contractId=${contract.id}" />&nbsp;
 	</jstl:if>
-	<br />
-	<a href="file/list.do?Id=${contract.id}"> <spring:message
-			code="file.list" />
-	</a>
 	<br />
 	<br />
 
 	<jstl:if test="${errorFile eq 'errorFile'}">
 		<a class="error"><spring:message code="file.error.one" /></a>
 	</jstl:if>
+</security:authorize>
+
+<security:authorize access="hasAnyRole('CUSTOMER','MANAGER')">
+
+	<!-- BILLBOARD FILES -->
+	<jstl:if test="${not empty billboardFiles and empty contract.signedManager}">
+		<h2><spring:message  code="billboardFile.list"/></h2>
+		<display:table name="billboardFiles" id="billboardFile" pagesize="5" class="displaytag"
+			requestURI="/contract/display.do?Id=${contract.id}">
+			
+			<!-- Attributes-->
+			<display:column titleKey="billboardFile.location" sortable="true">
+				<jstl:out value="${billboardFile.location}" />
+			</display:column>
+	
+			<!-- Action links -->
+			<display:column>
+				<a href="billboardFile/display.do?Id=${billboardFile.id}"> <spring:message
+						code="file.display" />
+				</a>
+			</display:column>
+			<display:column>
+				<a href="billboardFile/edit.do?Id=${billboardFile.id}"> <spring:message
+						code="file.edit" />
+				</a>
+			</display:column>
+			<display:column>
+				<a href="billboardFile/delete.do?Id=${billboardFile.id}"> <spring:message
+						code="file.delete" />
+				</a>
+			</display:column>
+		</display:table>
+		<br>
+	</jstl:if>
+	<jstl:if test="${not empty billboardFiles and not empty contract.signedManager}">
+		<h2><spring:message code="billboardFile.list" /></h2>
+		<display:table name="billboardFiles" id="billboardFile" pagesize="5" class="displaytag"
+			requestURI="/contract/display.do?Id=${contract.id}">
+			
+			<!-- Attributes-->
+			<display:column titleKey="billboardFile.location" sortable="true">
+				<jstl:out value="${row.location}" />
+			</display:column>
+	
+			<!-- Action links -->
+			<display:column>
+				<a href="billboardFile/display.do?Id=${billboardFile.id}"> <spring:message
+						code="file.display" />
+				</a>
+			</display:column>
+		</display:table>
+		<br>
+	</jstl:if>
+	
+	<!-- INFO FILES -->
+	<jstl:if test="${not empty infoFiles and empty contract.signedManager}">
+		<h2><spring:message code="infoFile.list" /></h2>
+		<display:table name="infoFiles" id="infoFile" pagesize="5" class="displaytag"
+			requestURI="/contract/display.do?Id=${contract.id}">
+			
+			<!-- Attributes-->
+			<display:column titleKey="infoFile.title" sortable="true">
+				<jstl:out value="${infoFile.title}" />
+			</display:column>
+	
+			<!-- Action links -->
+			<display:column>
+				<a href="infoFile/display.do?Id=${infoFile.id}"> <spring:message
+						code="file.display" />
+				</a>
+			</display:column>
+			<display:column>
+				<a href="infoFile/edit.do?Id=${infoFile.id}"> <spring:message
+						code="file.edit" />
+				</a>
+			</display:column>
+			<display:column>
+				<a href="infoFile/delete.do?Id=${infoFile.id}"> <spring:message
+						code="file.delete" />
+				</a>
+			</display:column>
+		</display:table>
+		<br>
+	</jstl:if>
+	<jstl:if test="${not empty infoFiles and not empty contract.signedManager}">
+		<h2><spring:message code="infoFile.list" /></h2>
+		<display:table name="infoFiles" id="infoFile" pagesize="5" class="displaytag"
+			requestURI="/contract/display.do?Id=${contract.id}">
+			
+			<!-- Attributes-->
+			<display:column titleKey="infoFile.title" sortable="true">
+				<jstl:out value="${infoFile.title}" />
+			</display:column>
+	
+			<!-- Action links -->
+			<display:column>
+				<a href="infoFile/display.do?Id=${infoFile.id}"> <spring:message
+						code="file.display" />
+				</a>
+			</display:column>
+		</display:table>
+		<br>
+	</jstl:if>
+	
+	<!-- TV FILES -->
+	<jstl:if test="${not empty TVFiles and empty contract.signedManager}">
+		<h2><spring:message code="TVFile.list" /></h2>
+		<display:table name="TVFiles" id="TVFile" pagesize="5" class="displaytag"
+			requestURI="/contract/display.do?Id=${contract.id}">
+			
+			<!-- Attributes-->
+			<display:column titleKey="TVFile.broadcasterName" sortable="true">
+				<jstl:out value="${TVFile.broadcasterName}" />
+			</display:column>
+	
+			<!-- Action links -->
+			<display:column>
+				<a href="TVFile/display.do?Id=${TVFile.id}"> <spring:message
+						code="file.display" />
+				</a>
+			</display:column>
+			<display:column>
+				<a href="TVFile/edit.do?Id=${TVFile.id}"> <spring:message
+						code="file.edit" />
+				</a>
+			</display:column>
+			<display:column>
+				<a href="TVFile/delete.do?Id=${TVFile.id}"> <spring:message
+						code="file.delete" />
+				</a>
+			</display:column>
+		</display:table>
+		<br>
+	</jstl:if>
+	<jstl:if test="${not empty TVFiles and not empty contract.signedManager}">
+		<h2><spring:message code="TVFile.list" /></h2>
+		<display:table name="TVFiles" id="TVFile" pagesize="5" class="displaytag"
+			requestURI="/contract/display.do?Id=${contract.id}">
+			
+			<!-- Attributes-->
+			<display:column titleKey="TVFile.broadcasterName" sortable="true">
+				<jstl:out value="${TVFile.broadcasterName}" />
+			</display:column>
+	
+			<!-- Action links -->
+			<display:column>
+				<a href="TVFile/display.do?Id=${row.id}"> <spring:message
+						code="file.display" />
+				</a>
+			</display:column>
+		</display:table>
+		<br>
+	</jstl:if>
+	
+	<!-- RADIO FILES -->
+	<jstl:if test="${not empty radioFiles and empty contract.signedManager}">
+		<h2><spring:message code="radioFile.list" /></h2>
+		<display:table name="radioFiles" id="radioFile" pagesize="5" class="displaytag"
+			requestURI="/contract/display.do?Id=${contract.id}">
+			
+			<!-- Attributes-->
+			<display:column titleKey="radioFile.broadcasterName" sortable="true">
+				<jstl:out value="${radioFile.broadcasterName}" />
+			</display:column>
+	
+			<!-- Action links -->
+			<display:column>
+				<a href="radioFile/display.do?Id=${radioFile.id}"> <spring:message
+						code="file.display" />
+				</a>
+			</display:column>
+			<display:column>
+				<a href="radioFile/edit.do?Id=${radioFile.id}"> <spring:message
+						code="file.edit" />
+				</a>
+			</display:column>
+			<display:column>
+				<a href="radioFile/delete.do?Id=${radioFile.id}"> <spring:message
+						code="file.delete" />
+				</a>
+			</display:column>
+		</display:table>
+		<br>
+	</jstl:if>
+	<jstl:if test="${not empty radioFiles and not empty contract.signedManager}">
+		<h2><spring:message code="radioFile.list" /></h2>
+		<display:table name="radioFiles" id="radioFile" pagesize="5" class="displaytag"
+			requestURI="/contract/display.do?Id=${contract.id}">
+			
+			<!-- Attributes-->
+			<display:column titleKey="radioFile.broadcasterName" sortable="true">
+				<jstl:out value="${radioFile.broadcasterName}" />
+			</display:column>
+	
+			<!-- Action links -->
+			<display:column>
+				<a href="radioFile/display.do?Id=${row.id}"> <spring:message
+						code="file.display" />
+				</a>
+			</display:column>
+		</display:table>
+		<br>
+	</jstl:if>
+	
+	<!-- SOCIAL NETWORK FILES -->
+	<jstl:if test="${not empty socialNetworkFiles and empty contract.signedManager}">
+		<h2><spring:message code="socialNetworkFile.list" /></h2>
+		<display:table name="socialNetworkFiles" id="socialNetworkFile" pagesize="5" class="displaytag"
+			requestURI="/contract/display.do?Id=${contract.id}">
+			
+			<!-- Attributes-->
+			<display:column titleKey="socialNetworkFile.target" sortable="true">
+				<jstl:out value="${socialNetworkFile.target}" />
+			</display:column>
+	
+			<!-- Action links -->
+			<display:column>
+				<a href="socialNetworkFile/display.do?Id=${socialNetworkFile.id}"> <spring:message
+						code="file.display" />
+				</a>
+			</display:column>
+			<display:column>
+				<a href="socialNetworkFile/edit.do?Id=${socialNetworkFile.id}"> <spring:message
+						code="file.edit" />
+				</a>
+			</display:column>
+			<display:column>
+				<a href="socialNetworkFile/delete.do?Id=${socialNetworkFile.id}"> <spring:message
+						code="file.delete" />
+				</a>
+			</display:column>
+		</display:table>
+		<br>
+	</jstl:if>
+	<jstl:if test="${not empty socialNetworkFiles and not empty contract.signedManager}">
+		<h2><spring:message code="socialNetworkFile.list" /></h2>
+		<display:table name="socialNetworkFiles" id="socialNetworkFile" pagesize="5" class="displaytag"
+			requestURI="/contract/display.do?Id=${contract.id}">
+			
+			<!-- Attributes-->
+			<display:column titleKey="socialNetworkFile.target" sortable="true">
+				<jstl:out value="${socialNetworkFile.target}" />
+			</display:column>
+	
+			<!-- Action links -->
+			<display:column>
+				<a href="socialNetworkFile/display.do?Id=${socialNetworkFile.id}"> <spring:message
+						code="file.display" />
+				</a>
+			</display:column>
+		</display:table>
+		<br>
+	</jstl:if>
+
 </security:authorize>
 
 <security:authorize access="hasRole('CUSTOMER')">
@@ -113,10 +355,6 @@
 					code="contract.sign" />
 			</a>
 		</jstl:if>
-		<br />
-		<a href="file/list.do?Id=${contract.id}"> <spring:message
-				code="file.list" />
-		</a>
 		<br />
 	</jstl:if>
 	<jstl:if test="${empty contract.signedManager}">

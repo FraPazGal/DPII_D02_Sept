@@ -11,18 +11,18 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import repositories.FileRepository;
+import repositories.InfoFileRepository;
 import domain.Actor;
 import domain.Contract;
-import domain.File;
+import domain.InfoFile;
 import domain.Manager;
 
 @Transactional
 @Service
-public class FileService {
+public class InfoFileService {
 
 	@Autowired
-	private FileRepository	fileRepository;
+	private InfoFileRepository	infoFileRepository;
 
 	@Autowired
 	private ContractService	contractService;
@@ -34,61 +34,62 @@ public class FileService {
 	private Validator		validator;
 
 
-	public File create(final Contract contract) {
-		File result;
+	public InfoFile create(final Contract contract) {
+		InfoFile result;
 		final Actor principal = this.actorService.findByPrincipal();
 		Assert.isTrue(this.actorService.checkAuthority(principal, "MANAGER"));
 		Assert.isTrue(contract.getRequest().getCustomer().getId() == principal.getId() || contract.getRequest().getPack().getManager().getId() == principal.getId());
-		result = new File();
+		result = new InfoFile();
 		result.setContract(contract);
+		result.setFileType("INFO");
 		return result;
 	}
 
-	public Collection<File> getListAllByContract(final int id) {
+	public Collection<InfoFile> getListAllByContract(final int id) {
 		final Contract contract = this.contractService.findOne(id);
 		final Actor principal = this.actorService.findByPrincipal();
 		Assert.isTrue(contract.getRequest().getCustomer().getId() == principal.getId() || contract.getRequest().getPack().getManager().getId() == principal.getId());
-		final Collection<File> files = this.fileRepository.findAllByContract(id);
-		return files;
+		final Collection<InfoFile> infoFiles = this.infoFileRepository.findAllInfoFileByContract(id);
+		return infoFiles;
 	}
-	public File findOneIfOwner(final int id) {
-		final File file = this.fileRepository.findOne(id);
+	public InfoFile findOneIfOwner(final int id) {
+		final InfoFile infoFile = this.infoFileRepository.findOne(id);
 		final Actor principal = this.actorService.findByPrincipal();
-		Assert.isTrue(file.getContract().getRequest().getCustomer().getId() == principal.getId() || file.getContract().getRequest().getPack().getManager().getId() == principal.getId());
-		return file;
+		Assert.isTrue(infoFile.getContract().getRequest().getCustomer().getId() == principal.getId() || infoFile.getContract().getRequest().getPack().getManager().getId() == principal.getId());
+		return infoFile;
 	}
 
-	public File reconstruct(final File fileF, final BindingResult binding) {
-		final File result = this.create(fileF.getContract());
+	public InfoFile reconstruct(final InfoFile fileF, final BindingResult binding) {
+		final InfoFile result = this.create(fileF.getContract());
 		final Manager principal = (Manager) this.actorService.findByPrincipal();
 		this.contractService.findOne(fileF.getContract().getId());
 		if (fileF.getId() != 0) {
-			final File orig = this.fileRepository.findOne(fileF.getId());
+			final InfoFile orig = this.infoFileRepository.findOne(fileF.getId());
 			Assert.notNull(orig);
 			Assert.isTrue(orig.getContract().getRequest().getPack().getManager().equals(principal));
 			result.setId(fileF.getId());
 		}
-		result.setImage(fileF.getImage());
-		result.setLocation(fileF.getLocation());
+		result.setTitle(fileF.getTitle());
+		result.setText(fileF.getText());
 		this.validator.validate(result, binding);
 		return result;
 	}
 
-	public File save(final File fileD) {
+	public InfoFile save(final InfoFile fileD) {
 		final Actor principal = this.actorService.findByPrincipal();
-		File result = this.create(fileD.getContract());
+		InfoFile result = this.create(fileD.getContract());
 		Assert.isTrue(this.actorService.checkAuthority(principal, "MANAGER"), "not.allowed");
 		Assert.isTrue(fileD.getContract().getRequest().getPack().getManager().equals(principal));
 		Assert.isNull(fileD.getContract().getSignedManager());
 		if (fileD.getId() != 0) {
-			result = this.fileRepository.findOne(fileD.getId());
+			result = this.infoFileRepository.findOne(fileD.getId());
 			Assert.notNull(result);
 			Assert.isTrue(result.getContract().getRequest().getPack().getManager().equals(principal));
 			Assert.isNull(result.getContract().getSignedManager());
 		}
-		result.setImage(fileD.getImage());
-		result.setLocation(fileD.getLocation());
-		return this.fileRepository.save(result);
+		result.setTitle(fileD.getTitle());
+		result.setText(fileD.getText());
+		return this.infoFileRepository.save(result);
 
 	}
 
@@ -96,19 +97,23 @@ public class FileService {
 		final Actor principal = this.actorService.findByPrincipal();
 		Assert.isTrue(this.actorService.checkAuthority(principal, "MANAGER"), "not.allowed");
 		Assert.notNull(principal);
-		final File file = this.fileRepository.findOne(id);
-		Assert.isNull(file.getContract().getSignedManager());
-		Assert.notNull(file);
-		Assert.isTrue(file.getId() != 0);
-		Assert.isTrue(file.getContract().getRequest().getPack().getManager().equals(principal));
-		final Integer i = file.getContract().getId();
-		this.fileRepository.delete(file.getId());
+		final InfoFile infoFile = this.infoFileRepository.findOne(id);
+		Assert.isNull(infoFile.getContract().getSignedManager());
+		Assert.notNull(infoFile);
+		Assert.isTrue(infoFile.getId() != 0);
+		Assert.isTrue(infoFile.getContract().getRequest().getPack().getManager().equals(principal));
+		final Integer i = infoFile.getContract().getId();
+		this.infoFileRepository.delete(infoFile.getId());
 		return i;
 	}
 
 	public void deleteAccount(final Contract c) {
-		final Collection<File> files = this.fileRepository.findAllByContract(c.getId());
-		if (!files.isEmpty())
-			this.fileRepository.deleteInBatch(files);
+		final Collection<InfoFile> infoFiles = this.infoFileRepository.findAllInfoFileByContract(c.getId());
+		if (!infoFiles.isEmpty())
+			this.infoFileRepository.deleteInBatch(infoFiles);
+	}
+	
+	public Double[] StatsInfoFilesPerContract() {
+		return this.infoFileRepository.statsInfoFilesPerContract();
 	}
 }

@@ -8,20 +8,20 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import repositories.FileRepository;
-import domain.File;
+import repositories.BillboardFileRepository;
+import domain.BillboardFile;
 
 @Component
 @Transactional
-public class StringToFileConverter implements Converter<String, File> {
+public class StringToFileConverter implements Converter<String, BillboardFile> {
 
 	@Autowired
-	FileRepository	repository;
+	BillboardFileRepository	repository;
 
 
 	@Override
-	public File convert(final String text) {
-		File result;
+	public BillboardFile convert(final String text) {
+		BillboardFile result;
 
 		int id;
 

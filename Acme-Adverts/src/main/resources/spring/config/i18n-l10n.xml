@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- * i18n-l10n.xml * * Copyright (C) 2019 Universidad de Sevilla * * The 
+	use of this project is hereby constrained to the conditions of the * TDG 
+	Licence, a copy of which you may download from * http://www.tdg-seville.info/License.html -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd 
+	">
+
+	<util:list id="messages">
+		<value>/views/master-page/messages</value>
+		<value>/views/misc/messages</value>
+		<value>/views/security/messages</value>
+		<value>/views/welcome/messages</value>
+		<value>/views/administrator/messages</value>
+		<value>/views/customer/messages</value>
+		<value>/views/profile/messages</value>
+		<value>/views/contract/messages</value>
+
+		<value>/views/billboardFile/messages</value>
+		<value>/views/socialNetworkFile/messages</value>
+		<value>/views/radioFile/messages</value>
+		<value>/views/TVFile/messages</value>
+		<value>/views/infoFile/messages</value>
+		<value>/views/file/messages</value>
+
+		<value>/views/finder/messages</value>
+		<value>/views/manager/messages</value>
+		<value>/views/package/messages</value>
+		<value>/views/request/messages</value>
+		<value>/views/systemConfiguration/messages</value>
+		<value>/views/terms/messages</value>
+	</util:list>
+
+</beans>

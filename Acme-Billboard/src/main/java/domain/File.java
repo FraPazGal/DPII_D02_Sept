@@ -20,7 +20,7 @@ public class File extends DomainEntity {
 
 
 	@NotBlank
-	@Pattern(regexp = "\\b(BILLBOARD|INFO|RADIO|TV|SOCIALNETWORK)\\b")
+	@Pattern(regexp = "^BILLBOARD|INFO|RADIO|TV|SOCIALNETWORK$")
 	public String getFileType() {
 		return this.fileType;
 	}

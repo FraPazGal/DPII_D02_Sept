@@ -75,7 +75,7 @@
 		<security:intercept-url pattern="/infoFile/edit.do" access="hasAnyRole('MANAGER')" /> 
 		
 		<security:intercept-url pattern="/finder/customer/**" access="hasRole('CUSTOMER')" /> 
-		<security:intercept-url pattern="/finder/anon/**" access="permitAll" /> 
+		<security:intercept-url pattern="/finder/anon/**" access="!hasRole('CUSTOMER')" /> 
 		<security:intercept-url pattern="/finder/manager/**" access="hasRole('MANAGER')" /> 
 		
 

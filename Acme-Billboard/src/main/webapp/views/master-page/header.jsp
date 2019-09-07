@@ -30,8 +30,15 @@
 					code="master.page.package" /></a>
 			<ul>
 				<li class="arrow"></li>
-				<li><a href="finder/anon/search.do"><spring:message
-							code="master.page.search" /></a></li>
+				<security:authorize access="!hasRole('CUSTOMER')">
+					<li><a href="finder/anon/search.do"><spring:message
+								code="master.page.search" /></a></li>
+				</security:authorize>
+				<security:authorize access="hasRole('CUSTOMER')">			
+					<li><a href="finder/customer/list.do"><spring:message
+								code="master.page.search" /></a></li>
+				</security:authorize>
+				
 				<security:authorize access="isAnonymous()">
 					<li><a href="package/listAll.do"><spring:message
 								code="master.page.package.list" /></a></li>
@@ -112,8 +119,6 @@
 
 					</security:authorize>
 					<security:authorize access="hasRole('CUSTOMER')">
-						<li><a href="finder/customer/list.do"><spring:message
-									code="master.page.finder" /></a></li>
 						<li><a href="customer/display.do"><spring:message
 									code="actor.view" /></a></li>
 						<li><a href="customer/export.do"><spring:message

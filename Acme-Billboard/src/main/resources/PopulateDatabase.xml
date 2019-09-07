@@ -422,9 +422,9 @@
 		<property name="welcomeMessage">
 			<util:map id="utilmap0" map-class="java.util.HashMap"
 				key-type="java.lang.String" value-type="java.lang.String">
-				<entry key="SP"
+				<entry key="Español"
 					value="“¡Bienvenidos a Acme Billboards! Publicítese con nosotros por mucho menos de los que piensa" />
-				<entry key="EN"
+				<entry key="English"
 					value="Welcome to Acme Billboards, Advertise with us for a lot less than you think it might cost!" />
 			</util:map>
 		</property>

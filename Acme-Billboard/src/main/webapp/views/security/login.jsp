@@ -23,8 +23,8 @@
 	</form:label>
 	<form:input path="username" />	
 	<form:errors class="error" path="username" />
-	<br />
-
+	<br /><br>
+	
 	<form:label path="password">
 		<spring:message code="security.password" />
 	</form:label>
@@ -37,7 +37,7 @@
 			<spring:message code="security.login.failed" />
 		</div>
 	</jstl:if>
-	
+	<br><br>
 	<input type="submit" value="<spring:message code="security.login" />" />
 	
 </form:form>

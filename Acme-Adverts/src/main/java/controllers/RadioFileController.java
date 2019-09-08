@@ -34,7 +34,7 @@ public class RadioFileController extends AbstractController {
 	public ModelAndView create(@RequestParam final int Id) {
 		ModelAndView result = new ModelAndView("radioFile/edit");
 		try {
-			final Contract contract = this.contractService.findOne(Id);
+			final Contract contract = this.contractService.assertValidContract(Id);
 			RadioFile radioFile = this.radioFileService.create(contract);
 			result.addObject("radioFile", radioFile);
 		} catch (final Throwable oops) {
@@ -65,7 +65,7 @@ public class RadioFileController extends AbstractController {
 	public ModelAndView editt(@RequestParam final int Id) {
 		ModelAndView result = new ModelAndView("radioFile/edit");
 		try {
-			RadioFile radioFile = this.radioFileService.findOneIfOwner(Id);
+			RadioFile radioFile = this.radioFileService.findOneIfOwnerAndDraft(Id);
 			result.addObject("radioFile", radioFile);
 		} catch (final Throwable opps) {
 			result = new ModelAndView("redirect:/welcome/index.do");

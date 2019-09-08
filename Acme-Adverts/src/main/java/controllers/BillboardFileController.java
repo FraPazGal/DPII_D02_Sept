@@ -33,7 +33,7 @@ public class BillboardFileController extends AbstractController {
 	public ModelAndView create(@RequestParam final int Id) {
 		ModelAndView result = new ModelAndView("billboardFile/edit");
 		try {
-			final Contract contract = this.contractService.findOne(Id);
+			final Contract contract = this.contractService.assertValidContract(Id);
 			BillboardFile billboardFile = this.billboardFileService.create(contract);
 			result.addObject("billboardFile", billboardFile);
 		} catch (final Throwable oops) {
@@ -64,7 +64,7 @@ public class BillboardFileController extends AbstractController {
 	public ModelAndView editt(@RequestParam final int Id) {
 		ModelAndView result = new ModelAndView("billboardFile/edit");
 		try {
-			BillboardFile billboardFile = this.billboardFileService.findOneIfOwner(Id);
+			BillboardFile billboardFile = this.billboardFileService.findOneIfOwnerAndDraft(Id);
 			result.addObject("billboardFile", billboardFile);
 		} catch (final Throwable opps) {
 			result = new ModelAndView("redirect:/welcome/index.do");

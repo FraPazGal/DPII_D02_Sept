@@ -34,7 +34,7 @@ public class SocialNetworkFileController extends AbstractController {
 	public ModelAndView create(@RequestParam final int Id) {
 		ModelAndView result = new ModelAndView("socialNetworkFile/edit");
 		try {
-			final Contract contract = this.contractService.findOne(Id);
+			final Contract contract = this.contractService.assertValidContract(Id);
 			SocialNetworkFile socialNetworkFile = this.socialNetworkFileService.create(contract);
 			result.addObject("socialNetworkFile", socialNetworkFile);
 		} catch (final Throwable oops) {
@@ -65,7 +65,7 @@ public class SocialNetworkFileController extends AbstractController {
 	public ModelAndView editt(@RequestParam final int Id) {
 		ModelAndView result = new ModelAndView("socialNetworkFile/edit");
 		try {
-			SocialNetworkFile socialNetworkFile = this.socialNetworkFileService.findOneIfOwner(Id);
+			SocialNetworkFile socialNetworkFile = this.socialNetworkFileService.findOneIfOwnerAndDraft(Id);
 			result.addObject("socialNetworkFile", socialNetworkFile);
 		} catch (final Throwable opps) {
 			result = new ModelAndView("redirect:/welcome/index.do");

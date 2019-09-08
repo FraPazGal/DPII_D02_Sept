@@ -69,6 +69,14 @@ public class RadioFileService {
 		Assert.isTrue(radioFile.getContract().getRequest().getCustomer().getId() == principal.getId() || radioFile.getContract().getRequest().getPack().getManager().getId() == principal.getId());
 		return radioFile;
 	}
+	
+	public RadioFile findOneIfOwnerAndDraft(final int id) {
+		final RadioFile radioFile = this.radioFileRepository.findOne(id);
+		final Actor principal = this.actorService.findByPrincipal();
+		Assert.isTrue(radioFile.getContract().getSignedManager() == null, "not allowed");
+		Assert.isTrue(radioFile.getContract().getRequest().getCustomer().getId() == principal.getId() || radioFile.getContract().getRequest().getPack().getManager().getId() == principal.getId());
+		return radioFile;
+	}
 
 	public RadioFile reconstruct(final RadioFile fileF, final BindingResult binding) {
 		final RadioFile result = this.create(fileF.getContract());

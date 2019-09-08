@@ -215,10 +215,6 @@
 
 	<table class="displayStyle" style="width: 50%">
 		<tr>
-			<th colspan="2"><spring:message
-					code="administrator.statistics.C" /></th>
-		</tr>
-		<tr>
 			<td><spring:message code="administrator.maxRequestPerManager" /></td>
 			<td style="text-align: right">${maxRequestPerManager}</td>
 		</tr>
@@ -318,10 +314,6 @@
 	</table>
 
 	<table class="displayStyle" style="width: 50%">
-		<tr>
-			<th colspan="2"><spring:message
-					code="administrator.statistics.B" /></th>
-		</tr>
 		<tr>
 			<td><spring:message code="administrator.MaxPackagePerFinder" /></td>
 			<td style="text-align: right">${statsFinder[0]}</td>

@@ -75,6 +75,14 @@ public class BillboardFileService {
 		Assert.isTrue(billboardFile.getContract().getRequest().getCustomer().getId() == principal.getId() || billboardFile.getContract().getRequest().getPack().getManager().getId() == principal.getId());
 		return billboardFile;
 	}
+	
+	public BillboardFile findOneIfOwnerAndDraft(final int id) {
+		final BillboardFile billboardFile = this.billboardFileRepository.findOne(id);
+		final Actor principal = this.actorService.findByPrincipal();
+		Assert.isTrue(billboardFile.getContract().getSignedManager() == null, "not allowed");
+		Assert.isTrue(billboardFile.getContract().getRequest().getCustomer().getId() == principal.getId() || billboardFile.getContract().getRequest().getPack().getManager().getId() == principal.getId());
+		return billboardFile;
+	}
 
 	public BillboardFile reconstruct(final BillboardFile fileF, final BindingResult binding) {
 		final BillboardFile result = this.create(fileF.getContract());

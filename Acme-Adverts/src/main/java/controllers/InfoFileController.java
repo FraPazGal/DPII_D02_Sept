@@ -34,7 +34,7 @@ public class InfoFileController extends AbstractController {
 	public ModelAndView create(@RequestParam final int Id) {
 		ModelAndView result = new ModelAndView("infoFile/edit");
 		try {
-			final Contract contract = this.contractService.findOne(Id);
+			final Contract contract = this.contractService.assertValidContract(Id);
 			InfoFile infoFile = this.infoFileService.create(contract);
 			result.addObject("infoFile", infoFile);
 		} catch (final Throwable oops) {
@@ -65,7 +65,7 @@ public class InfoFileController extends AbstractController {
 	public ModelAndView editt(@RequestParam final int Id) {
 		ModelAndView result = new ModelAndView("infoFile/edit");
 		try {
-			InfoFile infoFile = this.infoFileService.findOneIfOwner(Id);
+			InfoFile infoFile = this.infoFileService.findOneIfOwnerAndDraft(Id);
 			result = new ModelAndView("infoFile/edit");
 			result.addObject("infoFile", infoFile);
 		} catch (final Throwable opps) {

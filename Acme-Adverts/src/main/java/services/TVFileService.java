@@ -69,6 +69,14 @@ public class TVFileService {
 		Assert.isTrue(TVFile.getContract().getRequest().getCustomer().getId() == principal.getId() || TVFile.getContract().getRequest().getPack().getManager().getId() == principal.getId());
 		return TVFile;
 	}
+	
+	public TVFile findOneIfOwnerAndDraft(final int id) {
+		final TVFile TVFile = this.TVFileRepository.findOne(id);
+		final Actor principal = this.actorService.findByPrincipal();
+		Assert.isTrue(TVFile.getContract().getSignedManager() == null, "not allowed");
+		Assert.isTrue(TVFile.getContract().getRequest().getCustomer().getId() == principal.getId() || TVFile.getContract().getRequest().getPack().getManager().getId() == principal.getId());
+		return TVFile;
+	}
 
 	public TVFile reconstruct(final TVFile fileF, final BindingResult binding) {
 		final TVFile result = this.create(fileF.getContract());

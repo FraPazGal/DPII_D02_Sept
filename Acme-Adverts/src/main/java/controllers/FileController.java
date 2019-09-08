@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,7 +35,7 @@ public class FileController extends AbstractController {
 		ModelAndView result = new ModelAndView("file/selector");
 		try {
 			TypeForm typeForm = new TypeForm();
-			Contract contract = this.contractService.findOne(contractId);
+			Contract contract = this.contractService.assertValidContract(contractId);
 			typeForm.setId(contract.getId());
 			result.addObject("typeForm", typeForm);
 			result.addObject("backId", contract.getRequest().getId());
@@ -49,7 +50,7 @@ public class FileController extends AbstractController {
 	/* Selector */
 	@RequestMapping(value = "/selector", method = RequestMethod.POST, params="select")
 	public ModelAndView actionsEnrolments(@Valid TypeForm typeForm, BindingResult binding) {
-		ModelAndView result = new ModelAndView("file/selector");
+		ModelAndView result = null;
 		try {
 			if(!binding.hasErrors()) {
 				switch (typeForm.getType()) {
@@ -73,7 +74,9 @@ public class FileController extends AbstractController {
 					result = new ModelAndView("redirect:../infoFile/create.do?Id=" + typeForm.getId());
 					break;
 				}
+				Assert.notNull(result, "not.allowed");
 			} else {
+				result = new ModelAndView("file/selector");
 				result.addObject("typeForm", typeForm);
 				result.addObject("types", this.utilityService.typeOfFile());
 			}

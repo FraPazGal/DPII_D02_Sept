@@ -157,6 +157,15 @@ public class ContractService {
 		contract = this.contractRepository.findAllByPackage(id);
 		return contract;
 	}
+	
+	public Contract assertValidContract (Integer contractId) {
+		Contract contract = this.findOne(contractId);
+		Actor principal = this.actorService.findByPrincipal();
+		Assert.isTrue(contract.getRequest().getPack().getManager().getId() == principal.getId(), "not.allowed");
+		Assert.isTrue(contract.getSignedManager() == null, "not allowed");
+		
+		return contract;
+	}
 
 	public Contract draftContract(final Request result) {
 		Assert.isTrue(this.requestService.findOne(result.getId()).getStatus().equals("APPROVED"));
@@ -227,5 +236,7 @@ public class ContractService {
 		this.radioFileService.deleteRadioFilesFromContract(contract.getId());
 		this.socialNetworkFileService.deleteSocialNetworkFilesFromContract(contract.getId());
 	}
+	
+	
 
 }

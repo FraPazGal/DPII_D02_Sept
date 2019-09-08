@@ -69,6 +69,14 @@ public class InfoFileService {
 		Assert.isTrue(infoFile.getContract().getRequest().getCustomer().getId() == principal.getId() || infoFile.getContract().getRequest().getPack().getManager().getId() == principal.getId());
 		return infoFile;
 	}
+	
+	public InfoFile findOneIfOwnerAndDraft(final int id) {
+		final InfoFile infoFile = this.infoFileRepository.findOne(id);
+		final Actor principal = this.actorService.findByPrincipal();
+		Assert.isTrue(infoFile.getContract().getSignedManager() == null, "not allowed");
+		Assert.isTrue(infoFile.getContract().getRequest().getCustomer().getId() == principal.getId() || infoFile.getContract().getRequest().getPack().getManager().getId() == principal.getId());
+		return infoFile;
+	}
 
 	public InfoFile reconstruct(final InfoFile fileF, final BindingResult binding) {
 		final InfoFile result = this.create(fileF.getContract());

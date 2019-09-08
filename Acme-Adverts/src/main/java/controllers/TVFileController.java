@@ -34,7 +34,7 @@ public class TVFileController extends AbstractController {
 	public ModelAndView create(@RequestParam final int Id) {
 		ModelAndView result;
 		try {
-			final Contract contract = this.contractService.findOne(Id);
+			final Contract contract = this.contractService.assertValidContract(Id);
 			TVFile TVFile = this.TVFileService.create(contract);
 			result = new ModelAndView("TVFile/edit");
 			result.addObject("TVFile", TVFile);
@@ -67,7 +67,7 @@ public class TVFileController extends AbstractController {
 	public ModelAndView editt(@RequestParam final int Id) {
 		ModelAndView result;
 		try {
-			TVFile TVFile = this.TVFileService.findOneIfOwner(Id);
+			TVFile TVFile = this.TVFileService.findOneIfOwnerAndDraft(Id);
 			result = new ModelAndView("TVFile/edit");
 			result.addObject("TVFile", TVFile);
 		} catch (final Throwable opps) {

@@ -72,6 +72,7 @@ public class BillboardFileService {
 	public BillboardFile findOneIfOwner(final int id) {
 		final BillboardFile billboardFile = this.billboardFileRepository.findOne(id);
 		final Actor principal = this.actorService.findByPrincipal();
+		Assert.isTrue(billboardFile.getContract().getSignedManager() != null, "not allowed");
 		Assert.isTrue(billboardFile.getContract().getRequest().getCustomer().getId() == principal.getId() || billboardFile.getContract().getRequest().getPack().getManager().getId() == principal.getId());
 		return billboardFile;
 	}

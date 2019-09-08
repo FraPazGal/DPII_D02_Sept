@@ -66,6 +66,7 @@ public class RadioFileService {
 	public RadioFile findOneIfOwner(final int id) {
 		final RadioFile radioFile = this.radioFileRepository.findOne(id);
 		final Actor principal = this.actorService.findByPrincipal();
+		Assert.isTrue(radioFile.getContract().getSignedManager() != null, "not allowed");
 		Assert.isTrue(radioFile.getContract().getRequest().getCustomer().getId() == principal.getId() || radioFile.getContract().getRequest().getPack().getManager().getId() == principal.getId());
 		return radioFile;
 	}

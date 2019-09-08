@@ -66,6 +66,7 @@ public class TVFileService {
 	public TVFile findOneIfOwner(final int id) {
 		final TVFile TVFile = this.TVFileRepository.findOne(id);
 		final Actor principal = this.actorService.findByPrincipal();
+		Assert.isTrue(TVFile.getContract().getSignedManager() != null, "not allowed");
 		Assert.isTrue(TVFile.getContract().getRequest().getCustomer().getId() == principal.getId() || TVFile.getContract().getRequest().getPack().getManager().getId() == principal.getId());
 		return TVFile;
 	}

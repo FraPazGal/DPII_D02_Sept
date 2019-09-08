@@ -66,6 +66,7 @@ public class SocialNetworkFileService {
 	public SocialNetworkFile findOneIfOwner(final int id) {
 		final SocialNetworkFile socialNetworkFile = this.socialNetworkFileRepository.findOne(id);
 		final Actor principal = this.actorService.findByPrincipal();
+		Assert.isTrue(socialNetworkFile.getContract().getSignedManager() != null, "not allowed");
 		Assert.isTrue(socialNetworkFile.getContract().getRequest().getCustomer().getId() == principal.getId() || socialNetworkFile.getContract().getRequest().getPack().getManager().getId() == principal.getId());
 		return socialNetworkFile;
 	}

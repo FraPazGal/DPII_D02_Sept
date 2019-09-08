@@ -345,6 +345,13 @@
 		<property name="contract" ref="contract2" />
 	</bean>
 	
+	<bean id="socialNetworkFile3" class="domain.SocialNetworkFile">
+		<property name="fileType" value="SOCIALNETWORK" />
+		<property name="banner" value="https://parque-corredor.com/web/wp-content/uploads/2015/10/logo-cinesa.jpg" />
+		<property name="target" value="https://www.cinesa.com" />
+		<property name="contract" ref="contract1" />
+	</bean>
+	
 	<!-- RADIO FILES -->
 
 	<bean id="radioFile1" class="domain.RadioFile">

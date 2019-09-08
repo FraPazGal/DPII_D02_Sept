@@ -237,6 +237,27 @@ public class ContractService {
 		this.socialNetworkFileService.deleteSocialNetworkFilesFromContract(contract.getId());
 	}
 	
-	
+	public Contract getContractInMode (String mode) {
+		Contract result = null;
+		Actor principal = this.actorService.findByPrincipal();
+		Assert.isTrue(this.actorService.checkAuthority(principal, "MANAGER"), "not.allowed");
+		
+		Collection<Contract> contracts = this.contractRepository.findAllManager(principal.getId());
+		for(Contract c : contracts) {
+			if(mode == "DRAFT") {
+				if(c.getSignedManager() == null) {
+					result = c;
+					break;
+				}
+			} else if(mode == "FINAL") {
+				if(c.getSignedManager() != null) {
+					result = c;
+					break;
+				}
+			}
+		}
+		
+		return result;
+	}
 
 }

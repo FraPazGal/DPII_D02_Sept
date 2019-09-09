@@ -69,18 +69,10 @@ public class BillboardFileService {
 		return this.billboardFileRepository.findAllFilesByContract(contractId);
 	}
 	
-	public BillboardFile findOneIfOwner(final int id) {
+	public BillboardFile findOneIfOwnerAndDraft(final int id, boolean draft) {
 		final BillboardFile billboardFile = this.billboardFileRepository.findOne(id);
 		final Actor principal = this.actorService.findByPrincipal();
-		Assert.isTrue(billboardFile.getContract().getSignedManager() != null, "not allowed");
-		Assert.isTrue(billboardFile.getContract().getRequest().getCustomer().getId() == principal.getId() || billboardFile.getContract().getRequest().getPack().getManager().getId() == principal.getId());
-		return billboardFile;
-	}
-	
-	public BillboardFile findOneIfOwnerAndDraft(final int id) {
-		final BillboardFile billboardFile = this.billboardFileRepository.findOne(id);
-		final Actor principal = this.actorService.findByPrincipal();
-		Assert.isTrue(billboardFile.getContract().getSignedManager() == null, "not allowed");
+		Assert.isTrue((billboardFile.getContract().getSignedManager() == null) == draft, "not allowed");
 		Assert.isTrue(billboardFile.getContract().getRequest().getCustomer().getId() == principal.getId() || billboardFile.getContract().getRequest().getPack().getManager().getId() == principal.getId());
 		return billboardFile;
 	}
@@ -140,10 +132,14 @@ public class BillboardFileService {
 	}
 	
 	public Double[] StatsBillboardFilesPerContract() {
+		final Actor principal = this.actorService.findByPrincipal();
+		Assert.isTrue(this.actorService.checkAuthority(principal, "ADMIN"));
 		return this.billboardFileRepository.statsBillboardFilesPerContract();
 	}
 	
 	public Double[] StatsFilesPerContract() {
+		final Actor principal = this.actorService.findByPrincipal();
+		Assert.isTrue(this.actorService.checkAuthority(principal, "ADMIN"));
 		return this.billboardFileRepository.statsFilesPerContract();
 	}
 	

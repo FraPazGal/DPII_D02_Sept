@@ -83,30 +83,4 @@ public class SystemConfigurationService {
 		return result;
 	}
 
-	/* Find welcome message */
-	public Map<String, String> findWelcomeMessage() {
-		final Map<String, String> result;
-
-		result = this.findMySystemConfiguration().getWelcomeMessage();
-
-		return result;
-	}
-
-	/* Find BreachNotification */
-	public Map<String, String> findBreachNotification() {
-		final Map<String, String> result;
-		result = this.findMySystemConfiguration().getBreachNotification();
-		return result;
-	}
-
-	/* Find one system configuration */
-	public SystemConfiguration findOne(final int systemConfigurationId) {
-		SystemConfiguration res;
-
-		res = this.systemConfigurationRepository.findOne(systemConfigurationId);
-
-		return res;
-
-	}
-
 }

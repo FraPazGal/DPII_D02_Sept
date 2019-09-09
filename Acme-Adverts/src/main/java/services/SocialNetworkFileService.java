@@ -63,22 +63,14 @@ public class SocialNetworkFileService {
 		return this.socialNetworkFileRepository.findAllSNFileByContract(contract.getId());
 	}
 	
-	public SocialNetworkFile findOneIfOwner(final int id) {
+	public SocialNetworkFile findOneIfOwnerAndDraft(final int id, boolean draft) {
 		final SocialNetworkFile socialNetworkFile = this.socialNetworkFileRepository.findOne(id);
 		final Actor principal = this.actorService.findByPrincipal();
-		Assert.isTrue(socialNetworkFile.getContract().getSignedManager() != null, "not allowed");
+		Assert.isTrue((socialNetworkFile.getContract().getSignedManager() == null) == draft, "not allowed");
 		Assert.isTrue(socialNetworkFile.getContract().getRequest().getCustomer().getId() == principal.getId() || socialNetworkFile.getContract().getRequest().getPack().getManager().getId() == principal.getId());
 		return socialNetworkFile;
 	}
 	
-	public SocialNetworkFile findOneIfOwnerAndDraft(final int id) {
-		final SocialNetworkFile socialNetworkFile = this.socialNetworkFileRepository.findOne(id);
-		final Actor principal = this.actorService.findByPrincipal();
-		Assert.isTrue(socialNetworkFile.getContract().getSignedManager() == null, "not allowed");
-		Assert.isTrue(socialNetworkFile.getContract().getRequest().getCustomer().getId() == principal.getId() || socialNetworkFile.getContract().getRequest().getPack().getManager().getId() == principal.getId());
-		return socialNetworkFile;
-	}
-
 	public SocialNetworkFile reconstruct(final SocialNetworkFile fileF, final BindingResult binding) {
 		final SocialNetworkFile result = this.create(fileF.getContract());
 		final Manager principal = (Manager) this.actorService.findByPrincipal();
@@ -134,6 +126,8 @@ public class SocialNetworkFileService {
 	}
 	
 	public Double[] StatsSocialNetworkFilesPerContract() {
+		final Actor principal = this.actorService.findByPrincipal();
+		Assert.isTrue(this.actorService.checkAuthority(principal, "ADMIN"));
 		return this.socialNetworkFileRepository.statsSNFilesPerContract();
 	}
 	

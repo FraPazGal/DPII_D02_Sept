@@ -101,6 +101,7 @@ public class RequestService {
 			result.setCommentsManager(requestF.getCommentsManager());
 		} else {
 			result.setCommentsCustomer(requestF.getCommentsCustomer());
+			Assert.isTrue(this.actorService.checkAuthority(principal, "CUSTOMER"));
 			result.setCustomer((Customer) principal);
 		}
 		//		if (orig.getCommentsCustomer() != null) {

@@ -149,6 +149,10 @@ public class FinderService {
 		Double maximumSalary;
 		Date maximumDate;
 		Date minimumDate;
+		final Actor principal = this.actorService.findByPrincipal();
+		final Finder orig = this.finderByCustomer();
+		Assert.isTrue(orig.getCustomer().equals(finder.getCustomer()) && finder.getCustomer().equals(principal) && finder.getId() == orig.getId());
+		
 		int nResults;
 		if (finder.getMinPrice() != null)
 			Assert.isTrue(finder.getMinPrice() >= 0., "not.negative");
@@ -229,12 +233,21 @@ public class FinderService {
 	}
 
 	public Finder reconstruct(final Finder finder, final BindingResult binding) {
+
+		final Finder find = this.create();
 		final Actor principal = this.actorService.findByPrincipal();
 		Assert.isTrue(this.actorService.checkAuthority(principal, "CUSTOMER"), "not.allowed");
-		finder.setId(this.finderByCustomer().getId());
-		finder.setCustomer((Customer) principal);
-		this.validator.validate(finder, binding);
-		return finder;
+		final Finder orig = this.finderByCustomer();
+		find.setId(orig.getId());
+		find.setVersion(orig.getVersion());
+		find.setCustomer(orig.getCustomer());
+		find.setKeyWord(finder.getKeyWord());
+		find.setMaxDate(finder.getMaxDate());
+		find.setMaxPrice(finder.getMaxPrice());
+		find.setMinDate(finder.getMinDate());
+		find.setMinPrice(finder.getMinPrice());
+		this.validator.validate(find, binding);
+		return find;
 	}
 
 	public Double ratioFinders() {
@@ -253,7 +266,6 @@ public class FinderService {
 		final List<Integer> requests = new ArrayList<>();
 		for (final domain.Package p : packs)
 			requests.add(this.finderRepository.countRequestByPackage(p.getId()));
-		// TODO Auto-generated method stub
 		return requests;
 	}
 

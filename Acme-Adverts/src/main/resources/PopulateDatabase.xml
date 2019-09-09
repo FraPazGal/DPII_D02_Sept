@@ -234,6 +234,18 @@
 		<property name="finalMode" value="false" />
 		<property name="manager" ref="manager2" />
 	</bean>
+	
+	<bean id="package6" class="domain.Package">
+		<property name="ticker" value="YF99TF-49654" />
+		<property name="title" value="This is my worst billboard" />
+		<property name="description" value="A billboard 3x4 m" />
+		<property name="startDate" value="08/010/2019 10:00" />
+		<property name="endDate" value="08/10/2020 10:00" />
+		<property name="photo" value="https://tinyurl.com/acme-billboards" />
+		<property name="price" value="500.0" />
+		<property name="finalMode" value="false" />
+		<property name="manager" ref="manager1" />
+	</bean>
 
 	<!-- REQUEST -->
 
@@ -304,6 +316,13 @@
 		<property name="location" value="In the right" />
 		<property name="image" value="https://i.ibb.co/kGgVz69/Untitled.png" />
 		<property name="contract" ref="contract2" />
+	</bean>
+	
+	<bean id="billboardFile2" class="domain.BillboardFile">
+		<property name="fileType" value="BILLBOARD" />
+		<property name="location" value="In the right right" />
+		<property name="image" value="https://i.ibb.co/kGgVz69/Untitled.png" />
+		<property name="contract" ref="contract1" />
 	</bean>
 
 	<!-- INFO FILES -->
@@ -409,7 +428,7 @@
 		<property name="broadcasterName" value="DMAX" />
 		<property name="schedule" value="L-D todo el día" />
 		<property name="video" value="https://www.fakeurlvideo.com" />
-		<property name="contract" ref="contract2" />
+		<property name="contract" ref="contract1" />
 	</bean>
 
 	<!-- FINDER -->

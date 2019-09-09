@@ -63,18 +63,10 @@ public class InfoFileService {
 		return this.infoFileRepository.findAllInfoFileByContract(contract.getId());
 	}
 	
-	public InfoFile findOneIfOwner(final int id) {
+	public InfoFile findOneIfOwnerAndDraft(final int id, boolean draft) {
 		final InfoFile infoFile = this.infoFileRepository.findOne(id);
 		final Actor principal = this.actorService.findByPrincipal();
-		Assert.isTrue(infoFile.getContract().getSignedManager() != null, "not allowed");
-		Assert.isTrue(infoFile.getContract().getRequest().getCustomer().getId() == principal.getId() || infoFile.getContract().getRequest().getPack().getManager().getId() == principal.getId());
-		return infoFile;
-	}
-	
-	public InfoFile findOneIfOwnerAndDraft(final int id) {
-		final InfoFile infoFile = this.infoFileRepository.findOne(id);
-		final Actor principal = this.actorService.findByPrincipal();
-		Assert.isTrue(infoFile.getContract().getSignedManager() == null, "not allowed");
+		Assert.isTrue((infoFile.getContract().getSignedManager() == null) == draft, "not allowed");
 		Assert.isTrue(infoFile.getContract().getRequest().getCustomer().getId() == principal.getId() || infoFile.getContract().getRequest().getPack().getManager().getId() == principal.getId());
 		return infoFile;
 	}
@@ -134,6 +126,8 @@ public class InfoFileService {
 	}
 	
 	public Double[] StatsInfoFilesPerContract() {
+		final Actor principal = this.actorService.findByPrincipal();
+		Assert.isTrue(this.actorService.checkAuthority(principal, "ADMIN"));
 		return this.infoFileRepository.statsInfoFilesPerContract();
 	}
 	

@@ -69,44 +69,79 @@
 		<jstl:if test="${not empty packages}">
 			<display:table name="packages" id="row"
 				requestURI="finder/customer/list.do" pagesize="5" class="displaytag">
+		<!-- Attributes-->
+		<display:column titleKey="package.ticker" sortable="true">
+			<jstl:out value="${row.ticker}" />
+		</display:column>
+		<display:column titleKey="package.title" sortable="true">
+			<jstl:out value="${row.title}" />
+		</display:column>
+		<display:column titleKey="package.startDate" sortable="true">
+			<jstl:out value="${row.startDate}" />
+		</display:column>
+		<display:column titleKey="package.endDate" sortable="true">
+			<jstl:out value="${row.endDate}" />
+		</display:column>
+		<display:column titleKey="package.price" sortable="true">
+			<fmt:formatNumber maxFractionDigits="2" value="${row.price}" />
+		</display:column>
+		<display:column titleKey="package.manager" sortable="true">
+			<jstl:out value="${row.manager.userAccount.username}" />
+		</display:column>
 
-				<!-- Attributes-->
-				<display:column titleKey="package.ticker" sortable="true">
-					<jstl:out value="${row.ticker}" />
-				</display:column>
-				<display:column titleKey="package.title" sortable="true">
-					<jstl:out value="${row.title}" />
-				</display:column>
-				<display:column titleKey="package.startDate" sortable="true">
-					<jstl:out value="${row.startDate}" />
-				</display:column>
-				<display:column titleKey="package.endDate" sortable="true">
-					<jstl:out value="${row.endDate}" />
-				</display:column>
-				<display:column titleKey="package.price" sortable="true">
-					<fmt:formatNumber maxFractionDigits="2" value="${row.price}" />
-				</display:column>
-				<display:column titleKey="package.manager" sortable="true">
-					<jstl:out value="${row.manager.userAccount.username}" />
-				</display:column>
+		<!-- Action links -->
+		<display:column>
 
-				<!-- Action links -->
-				<display:column>
-
-					<jstl:if test="${row.finalMode == true}">
-						<a href="request/create.do?Id=${row.id}"> <spring:message
-								code="request.create" />
+			<jstl:if test="${row.finalMode == true}">
+				<security:authorize access="hasRole('CUSTOMER')">
+				<jstl:if test="${now < row.endDate.time }">
+					<a href="request/create.do?Id=${row.id}"> <spring:message
+							code="request.create" />
+					</a>
+					</jstl:if>
+				</security:authorize>
+				<security:authorize access="hasRole('MANAGER')">
+					<jstl:if test="${actor eq row.manager }">
+						<a href="request/listPackage.do?Id=${row.id}"> <spring:message
+								code="request.list" />
 						</a>
 					</jstl:if>
-				</display:column>
-				<display:column>
-					<jstl:if test="${row.finalMode == true}">
-						<a href="package/display.do?Id=${row.id}"> <spring:message
-								code="package.display" />
-						</a>
-					</jstl:if>
-				</display:column>
-			</display:table>
+				</security:authorize>
+			</jstl:if>
+		</display:column>
+		<display:column>
+			<jstl:if test="${row.finalMode == false and actor eq row.manager}">
+
+				<a href="package/display.do?Id=${row.id}"> <spring:message
+						code="package.display" />
+				</a>
+			</jstl:if>
+			<jstl:if test="${row.finalMode == true}">
+
+				<a href="package/display.do?Id=${row.id}"> <spring:message
+						code="package.display" />
+				</a>
+			</jstl:if>
+		</display:column>
+		<display:column>
+			<jstl:if test="${row.finalMode == false and actor eq row.manager}">
+
+				<a href="package/manager/edit.do?Id=${row.id}"> <spring:message
+						code="package.edit" />
+				</a>
+
+			</jstl:if>
+
+		</display:column>
+		<display:column>
+			<jstl:if test="${row.finalMode == false and actor eq row.manager}">
+				<a href="package/manager/delete.do?Id=${row.id}"> <spring:message
+						code="package.delete" />
+				</a>
+			</jstl:if>
+
+		</display:column>
+	</display:table>
 		</jstl:if>
 	</jstl:if>
 

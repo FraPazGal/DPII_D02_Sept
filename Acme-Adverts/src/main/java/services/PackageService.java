@@ -44,21 +44,21 @@ public class PackageService {
 
 	public domain.Package create() {
 		domain.Package result;
-		final Manager principal = (Manager) this.actorService.findByPrincipal();
+		final Actor principal = this.actorService.findByPrincipal();
 		Assert.isTrue(this.actorService.checkAuthority(principal, "MANAGER"));
 
 		result = new domain.Package();
-		result.setManager(principal);
+		result.setManager((Manager) principal);
 		result.setFinalMode(false);
 		return result;
 	}
 	public PackageForm createF() {
 		PackageForm result;
-		final Manager principal = (Manager) this.actorService.findByPrincipal();
+		final Actor principal = this.actorService.findByPrincipal();
 		Assert.isTrue(this.actorService.checkAuthority(principal, "MANAGER"));
 
 		result = new PackageForm();
-		result.setManager(principal);
+		result.setManager((Manager) principal);
 		result.setFinalMode(false);
 		return result;
 	}
@@ -73,7 +73,7 @@ public class PackageService {
 	public Collection<domain.Package> getListLoged() {
 		final Actor principal = this.actorService.findByPrincipal();
 		Collection<domain.Package> packs;
-
+		Assert.isTrue(this.actorService.checkAuthority(principal, "MANAGER"));
 		packs = this.packageRepository.findAllManager(principal.getId());
 
 		return packs;
@@ -86,7 +86,8 @@ public class PackageService {
 	public domain.Package findOneMode(final int id) {
 		final domain.Package pack = this.findOne(id);
 		if (!pack.getFinalMode()) {
-			final Manager actor = (Manager) this.actorService.findByPrincipal();
+			final Actor actor = this.actorService.findByPrincipal();
+			Assert.isTrue(this.actorService.checkAuthority(actor, "MANAGER"));
 			Assert.isTrue(pack.getManager().equals(actor));
 		}
 		return pack;
@@ -94,6 +95,7 @@ public class PackageService {
 
 	public void delete(final int id) {
 		final Actor principal = this.actorService.findByPrincipal();
+		Assert.isTrue(this.actorService.checkAuthority(principal, "MANAGER"));
 		Assert.notNull(principal);
 		final domain.Package pack = this.findOne(id);
 		Assert.notNull(pack);
@@ -107,7 +109,8 @@ public class PackageService {
 		// TODO Auto-generated method stub
 		//ticker
 		final domain.Package result = this.create();
-		final Manager principal = (Manager) this.actorService.findByPrincipal();
+		final Actor principal = this.actorService.findByPrincipal();
+		Assert.isTrue(this.actorService.checkAuthority(principal, "MANAGER"));
 		if (packageF.getId() != 0) {
 			final domain.Package orig = this.findOne(packageF.getId());
 			Assert.notNull(orig);
@@ -119,7 +122,6 @@ public class PackageService {
 		} else {
 			final String ticker = this.utilityService.getTicker();
 			result.setTicker(ticker);
-
 		}
 
 		result.setDescription(packageF.getDescription());

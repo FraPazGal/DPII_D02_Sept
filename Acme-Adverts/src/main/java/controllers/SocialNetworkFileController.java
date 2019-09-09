@@ -50,7 +50,7 @@ public class SocialNetworkFileController extends AbstractController {
 	public ModelAndView display(@RequestParam final int Id) {
 		ModelAndView result = new ModelAndView("socialNetworkFile/display");
 		try {
-			SocialNetworkFile socialNetworkFile = this.socialNetworkFileService.findOneIfOwner(Id);
+			SocialNetworkFile socialNetworkFile = this.socialNetworkFileService.findOneIfOwnerAndDraft(Id, false);
 			result.addObject("socialNetworkFile", socialNetworkFile);
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/welcome/index.do");
@@ -65,7 +65,7 @@ public class SocialNetworkFileController extends AbstractController {
 	public ModelAndView editt(@RequestParam final int Id) {
 		ModelAndView result = new ModelAndView("socialNetworkFile/edit");
 		try {
-			SocialNetworkFile socialNetworkFile = this.socialNetworkFileService.findOneIfOwnerAndDraft(Id);
+			SocialNetworkFile socialNetworkFile = this.socialNetworkFileService.findOneIfOwnerAndDraft(Id, true);
 			result.addObject("socialNetworkFile", socialNetworkFile);
 		} catch (final Throwable opps) {
 			result = new ModelAndView("redirect:/welcome/index.do");

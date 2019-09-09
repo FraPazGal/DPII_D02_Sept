@@ -32,9 +32,6 @@ public class AdministratorService {
 	private ActorService				actorService;
 
 	@Autowired
-	private UtilityService				utilityService;
-
-	@Autowired
 	private SystemConfigurationService	systemConfigurationService;
 
 
@@ -102,10 +99,11 @@ public class AdministratorService {
 	/* Other methods */
 
 	public Administrator reconstruct(final EditionFormObject form, final BindingResult binding) {
-
+		final Actor principal = this.actorService.findByPrincipal();
+		Assert.isTrue(this.actorService.checkAuthority(principal, "ADMIN"));
+		
 		/* Creating admin */
 		final Administrator res = this.create();
-		final Actor principal = this.actorService.findByPrincipal();
 		res.setId(principal.getId());
 		res.setVersion(form.getVersion());
 		res.setName(form.getName());
@@ -191,10 +189,24 @@ public class AdministratorService {
 	}
 
 	public void delete() {
-		// TODO Auto-generated method stub
 		final Actor principal = this.actorService.findByPrincipal();
+		Assert.isTrue(this.actorService.checkAuthority(principal, "ADMIN"));
 		this.administratorRepository.delete(principal.getId());
-
+	}
+	
+	public String export() {
+		String res;
+		final Actor actor = this.actorService.findByPrincipal();
+		Assert.isTrue(this.actorService.checkAuthority(actor, "ADMIN"));
+		
+		res = "Data of your user account:";
+		res += "\r\n\r\n";
+		res += "Name: " + actor.getName() + " \r\n" + "Surname: " + actor.getSurname() + " \r\n" + "MiddleName:" + actor.getMiddleName() + " \r\n" + "Photo: " + actor.getPhoto() + " \r\n" + "Email: " + actor.getEmail() + " \r\n" + "Phone Number: "
+			+ actor.getPhoneNumber() + " \r\n" + "Address: " + actor.getAddress() + " \r\n" + " \r\n" + "\r\n";
+		res += "\r\n\r\n";
+		res += "----------------------------------------";
+		
+		return res;
 	}
 
 }

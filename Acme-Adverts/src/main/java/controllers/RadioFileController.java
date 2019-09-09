@@ -50,7 +50,7 @@ public class RadioFileController extends AbstractController {
 	public ModelAndView display(@RequestParam final int Id) {
 		ModelAndView result = new ModelAndView("radioFile/display");
 		try {
-			RadioFile radioFile = this.radioFileService.findOneIfOwner(Id);
+			RadioFile radioFile = this.radioFileService.findOneIfOwnerAndDraft(Id, false);
 			result.addObject("radioFile", radioFile);
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/welcome/index.do");
@@ -65,7 +65,7 @@ public class RadioFileController extends AbstractController {
 	public ModelAndView editt(@RequestParam final int Id) {
 		ModelAndView result = new ModelAndView("radioFile/edit");
 		try {
-			RadioFile radioFile = this.radioFileService.findOneIfOwnerAndDraft(Id);
+			RadioFile radioFile = this.radioFileService.findOneIfOwnerAndDraft(Id, true);
 			result.addObject("radioFile", radioFile);
 		} catch (final Throwable opps) {
 			result = new ModelAndView("redirect:/welcome/index.do");

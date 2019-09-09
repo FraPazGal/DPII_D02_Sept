@@ -50,7 +50,7 @@ public class InfoFileController extends AbstractController {
 	public ModelAndView display(@RequestParam final int Id) {
 		ModelAndView result = new ModelAndView("infoFile/display");
 		try {
-			InfoFile infoFile = this.infoFileService.findOneIfOwner(Id);
+			InfoFile infoFile = this.infoFileService.findOneIfOwnerAndDraft(Id, false);
 			result.addObject("infoFile", infoFile);
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/welcome/index.do");
@@ -65,7 +65,7 @@ public class InfoFileController extends AbstractController {
 	public ModelAndView editt(@RequestParam final int Id) {
 		ModelAndView result = new ModelAndView("infoFile/edit");
 		try {
-			InfoFile infoFile = this.infoFileService.findOneIfOwnerAndDraft(Id);
+			InfoFile infoFile = this.infoFileService.findOneIfOwnerAndDraft(Id, true);
 			result = new ModelAndView("infoFile/edit");
 			result.addObject("infoFile", infoFile);
 		} catch (final Throwable opps) {

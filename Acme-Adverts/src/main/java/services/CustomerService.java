@@ -16,10 +16,17 @@ import org.springframework.validation.BindingResult;
 import repositories.CustomerRepository;
 import security.Authority;
 import security.UserAccount;
-import security.UserAccountRepository;
 import domain.Actor;
+import domain.BillboardFile;
+import domain.Contract;
 import domain.CreditCard;
 import domain.Customer;
+import domain.Finder;
+import domain.InfoFile;
+import domain.RadioFile;
+import domain.Request;
+import domain.SocialNetworkFile;
+import domain.TVFile;
 import forms.EditionCustomerFormObject;
 import forms.RegisterCustomerFormObject;
 
@@ -44,11 +51,27 @@ public class CustomerService {
 
 	@Autowired
 	private SystemConfigurationService	systemConfigurationService;
-	@Autowired
-	private UserAccountRepository		userAccountRepository;
-
+	
 	@Autowired
 	private FinderService				finderService;
+	
+	@Autowired
+	private ContractService	contractService;
+	
+	@Autowired
+	private BillboardFileService	billboardFileService;
+	
+	@Autowired
+	private SocialNetworkFileService	socialNetworkFileService;
+	
+	@Autowired
+	private InfoFileService	infoFileService;
+	
+	@Autowired
+	private TVFileService	TVFileService;
+	
+	@Autowired
+	private RadioFileService	radioFileService;
 
 
 	public Customer findOneNot(final Integer id) {
@@ -295,9 +318,125 @@ public class CustomerService {
 	}
 
 	public void delete() {
-		//final Actor principal = this.actorService.findByPrincipal();
+		final Actor principal = this.actorService.findByPrincipal();
+		Assert.isTrue(this.actorService.checkAuthority(principal, "CUSTOMER"));
 		this.requestService.deleteAccountCustomer();
 		this.finderService.deleteAccountCustomer();
 		//this.customerRepository.delete(principal.getId());
+	}
+	
+	public String export() {
+		String res;
+		final Actor principal = this.actorService.findByPrincipal();
+		Assert.isTrue(this.actorService.checkAuthority(principal, "CUSTOMER"));
+		final Customer actor = (Customer) principal;
+		res = "Data of your user account:";
+		res += "\r\n\r\n";
+		res += "Name: " + actor.getName() + " \r\n" + "Surname: " + actor.getSurname() + " \r\n" + "MiddleName:" + actor.getMiddleName() + " \r\n" + "VAT:" + actor.getVat() + " \r\n" + "Photo: " + actor.getPhoto() + " \r\n" + "Email: " + actor.getEmail()
+			+ " \r\n" + "Phone Number: " + actor.getPhoneNumber() + " \r\n" + "Address: " + actor.getAddress() + "\r\n" + " \r\n" + " \r\n" + "\r\n" + "Credit Card:" + "\r\n" + "Holder:" + actor.getCreditCard().getHolder() + "\r\n" +
+
+			"Make:" + actor.getCreditCard().getMake() + "\r\n" + "Number:" + actor.getCreditCard().getNumber() + "\r\n" + "Date expiration:" + actor.getCreditCard().getExpirationMonth() + "/" + actor.getCreditCard().getExpirationYear() + "\r\n" + "CVV:"
+			+ actor.getCreditCard().getCVV();
+		res += "\r\n\r\n";
+		res += "----------------------------------------";
+		res += "\r\n\r\n";
+
+		final Collection<Request> requests = this.requestService.getListAll();
+
+		for (final Request r : requests) {
+			res += "----------------------------------------";
+			res += "\r\n\r\n";
+			res += "Request: " + "\r\n\r\n";
+			res += "Status: " + r.getStatus() + "\r\n\r\n";
+			res += "Customer comments:  " + r.getCommentsCustomer() + "\r\n\r\n";
+			res += "Manager Comments: " + r.getCommentsManager() + "\r\n\r\n";
+			res += "Pack: " + r.getPack().getTitle() + "\r\n\r\n";
+			res += "-----------";
+		}
+		
+		final Finder find = this.finderService.finderByCustomer();
+		
+		res += "----------------------------------------";
+		res += "\r\n\r\n";
+		res += "Finder: " + "\r\n\r\n";
+		res += "Keyword: " + find.getKeyWord() + "\r\n\r\n";
+		res += "Max price:  " + find.getMaxPrice() + "\r\n\r\n";
+		res += "Min price " + find.getMinPrice() + "\r\n\r\n";
+		res += "Max date: " + find.getMaxDate() + "\r\n\r\n";
+		res += "Min date: " + find.getMinDate() + "\r\n\r\n";
+		res += "Packages: " + "\r\n\r\n";
+		if(find.getPackages() != null) {
+			for (final domain.Package p : find.getPackages()) {
+				res += "----------------------------------------";
+				res += "\r\n\r\n";
+				res += "Package: " + "\r\n\r\n";
+				res += "Ticker: " + p.getTicker() + "\r\n\r\n" + "Title: " + p.getTitle() + "\r\n\r\n" + "Description: " + p.getDescription() + "\r\n\r\n" + "Start Date: " + p.getStartDate() + "\r\n\r\n" + "End Date: " + p.getEndDate() + "\r\n\r\n"
+					+ "Photo: " + p.getPhoto() + "Price: " + p.getPrice() + "\r\n\r\n";
+				res += "\r\n\r\n";
+			}
+		}
+		res += "-----------";
+
+		final Collection<Contract> contracts = this.contractService.getListAll();
+		for (final Contract c : contracts) {
+			final Collection<BillboardFile> billboardFiles = this.billboardFileService.getListAllByContractToDelete(c.getId());
+			final Collection<InfoFile> infoFiles = this.infoFileService.getListAllByContractToDelete(c.getId());
+			final Collection<RadioFile> radioFiles = this.radioFileService.getListAllByContractToDelete(c.getId());
+			final Collection<TVFile> TVFiles = this.TVFileService.getListAllByContractToDelete(c.getId());
+			final Collection<SocialNetworkFile> socialNetworkFiles = this.socialNetworkFileService.getListAllByContractToDelete(c.getId());
+			res += "----------------------------------------";
+			res += "\r\n\r\n";
+			res += "Contract: " + "\r\n\r\n";
+			res += "Customer signed date: " + c.getSignedCustomer() + "\r\n\r\n";
+			res += "Manager signed date: " + c.getSignedManager() + "\r\n\r\n";
+			res += "Text:  " + c.getText() + "\r\n\r\n";
+			res += "Pack: " + c.getRequest().getPack().getTitle() + "\r\n\r\n\r\n";
+			res += "Files: " + "\r\n\r\n\r\n";
+			res += "Billboard Files: " + "\r\n\r\n";
+			for (final BillboardFile f : billboardFiles) {
+				res += "Location: " + f.getLocation() + "\r\n\r\n";
+				res += "Image: " + f.getImage() + "\r\n\r\n";
+				res += "-----";
+				res += "\r\n";
+			}
+			res += "-----------" + "\r\n\r\n";
+			res += "Info Files: " + "\r\n\r\n";
+			for (final InfoFile f : infoFiles) {
+				res += "Title: " + f.getTitle() + "\r\n\r\n";
+				res += "Text: " + f.getText() + "\r\n\r\n";
+				res += "-----";
+				res += "\r\n";
+			}
+			res += "-----------" + "\r\n\r\n";
+			res += "Radio Files: " + "\r\n\r\n";
+			for (final RadioFile f : radioFiles) {
+				res += "Broadcaster Name: " + f.getBroadcasterName() + "\r\n\r\n";
+				res += "Schedule: " + f.getSchedule() + "\r\n\r\n";
+				res += "Sound: " + f.getSound() + "\r\n\r\n";
+				res += "-----";
+				res += "\r\n";
+			}
+			res += "-----------" + "\r\n\r\n";
+			res += "TV Files: " + "\r\n\r\n";
+			for (final TVFile f : TVFiles) {
+				res += "Broadcaster Name: " + f.getBroadcasterName() + "\r\n\r\n";
+				res += "Schedule: " + f.getSchedule() + "\r\n\r\n";
+				res += "Video: " + f.getVideo() + "\r\n\r\n";
+				res += "-----";
+				res += "\r\n";
+			}
+			res += "-----------" + "\r\n\r\n";
+			res += "Social Network Files: " + "\r\n\r\n";
+			for (final SocialNetworkFile f : socialNetworkFiles) {
+				res += "Banner: " + f.getBanner() + "\r\n\r\n";
+				res += "Target: " + f.getTarget() + "\r\n\r\n";
+				res += "-----";
+				res += "\r\n";
+			}
+			res += "-----------";
+			
+		}
+		
+		return res;
 	}
 }

@@ -33,20 +33,20 @@ public class FileServiceTest extends AbstractTest {
 	 * Total coverage of all tests
 	 * 
 	 * 
-	 * Coverage of the total project (%):
+	 * Coverage of the total project (%): 66'0
 	 * 
 	 * 
-	 * Coverage of the total project (lines of codes):
+	 * Coverage of the total project (lines of codes): 16.563
 	 * 
 	 * ################################################################
 	 * 
 	 * Total coverage by exclusively executing this test class
 	 * 
 	 * 
-	 * Coverage of the total project (%):
+	 * Coverage of the total project (%): 16'2
 	 * 
 	 * 
-	 * Coverage of the total project (lines of codes):
+	 * Coverage of the total project (lines of codes): 4.074
 	 * 
 	 * ################################################################
 	 * 
@@ -79,6 +79,7 @@ public class FileServiceTest extends AbstractTest {
 
 
 	//Test 1: A manager displays a contract, list their files and edit a file
+	//Req. 2.1
 	@Test
 	public void driverEditFile() {
 		final Object testingData[][] = {
@@ -130,6 +131,21 @@ public class FileServiceTest extends AbstractTest {
 			
 			{
 				"manager1", "manager1", "Text 1 for testing", "Text 2 for testing", "http://www.url1.com", "http://www.url2.com", "DRAFT", "RADIO", null
+			},
+			//Positive test case, a manager edits a radio file
+			
+			{
+				"manager1", "manager1", "Text 1 for testing", "Text 2 for testing", "http://www.url1.com", "http://www.url2.com", "DRAFT", "TV", null
+			},
+			//Positive test case, a manager edits a radio file
+			
+			{
+				"manager1", "manager1", "Text 1 for testing", "Text 2 for testing", "http://www.url1.com", "http://www.url2.com", "DRAFT", "BILLBOARD", null
+			},
+			//Positive test case, a manager edits a radio file
+			
+			{
+				"manager1", "manager1", "Text 1 for testing", "Text 2 for testing", "http://www.url1.com", "http://www.url2.com", "DRAFT", "SOCIALNETWORK", null
 			},
 			//Positive test case, a manager edits a radio file
 		};
@@ -259,6 +275,7 @@ public class FileServiceTest extends AbstractTest {
 	}
 	
 	//Test 2: A manager displays a contract and creates a file
+	//Req. 2.1
 	@Test
 	public void driverCreateFile() {
 		final Object testingData[][] = {
@@ -378,6 +395,7 @@ public class FileServiceTest extends AbstractTest {
 	}
 	
 	//Test 3: A manager displays a contract, list their files and deletes a file
+	//Req. 2.1
 	@Test
 	public void driverDeleteFile() {
 		final Object testingData[][] = {
@@ -396,6 +414,38 @@ public class FileServiceTest extends AbstractTest {
 				"manager1", "manager1", "DRAFT", "RADIO", null
 			},
 			//Positive test case, a manager deletes a radio file
+			
+			{
+				"manager1", "manager1", "DRAFT", "BILLBOARD", null
+			},
+			//Positive test case, a manager deletes a radio file
+			
+			{
+				"manager1", "manager1", "DRAFT", "TV", null
+			},
+			//Positive test case, a manager deletes a radio file
+			
+			{
+				"manager1", "manager1", "DRAFT", "INFO", null
+			},
+			//Positive test case, a manager deletes a radio file
+			
+			{
+				"manager1", "manager1", "DRAFT", "SOCIALNETWORK", null
+			},
+			//Positive test case, a manager deletes a radio file
+			
+			{
+				"manager1", "manager1", "DRAFT", "RADIO", null
+			},
+			//Positive test case, a manager deletes a radio file
+			
+			{
+				"manager1", "manager1", "DRAFT", "BILLBOARD", null
+			},
+			//Positive test case, a manager deletes a radio file
+			
+			
 		};
 
 		for (int i = 0; i < testingData.length; i++) {
@@ -471,8 +521,8 @@ public class FileServiceTest extends AbstractTest {
 		
 	}
 
-
 	//Test 4: A manager displays a contract, list their files and displays a file
+	//Req. 2.1
 	@Test
 	public void driverDisplayFile() {
 		final Object testingData[][] = {
@@ -491,6 +541,28 @@ public class FileServiceTest extends AbstractTest {
 				"manager1", "customer2", "FINAL", "INFO", null
 			},
 			//Positive test case, a customer displays a file of one of theirs contracts
+			
+			{
+				"manager1", "customer2", "FINAL", "TV", null
+			},
+			//Positive test case, a customer displays a file of one of theirs contracts
+			
+			{
+				"manager1", "customer2", "FINAL", "RADIO", null
+			},
+			//Positive test case, a customer displays a file of one of theirs contracts
+			
+			{
+				"manager1", "customer2", "FINAL", "SOCIALNETWORK", null
+			},
+			//Positive test case, a customer displays a file of one of theirs contracts
+			
+			{
+				"manager1", "customer2", "FINAL", "BILLBOARD", null
+			},
+			//Positive test case, a customer displays a file of one of theirs contracts
+			
+			
 		};
 
 		for (int i = 0; i < testingData.length; i++) {
@@ -530,35 +602,35 @@ public class FileServiceTest extends AbstractTest {
 		switch (type) {
 		case "BILLBOARD":
 			for(BillboardFile f : billboardFiles) {
-				this.billboardFileService.findOneIfOwner(f.getId());
+				this.billboardFileService.findOneIfOwnerAndDraft(f.getId(), false);
 				break;
 			}
 			break;
 			
 		case "INFO":
 			for(InfoFile f : infoFiles) {
-				this.infoFileService.findOneIfOwner(f.getId());
+				this.infoFileService.findOneIfOwnerAndDraft(f.getId(), false);
 				break;
 			}
 			break;
 		
 		case "TV": 
 			for(TVFile f : TVFiles) {
-				this.TVFileService.findOneIfOwner(f.getId());
+				this.TVFileService.findOneIfOwnerAndDraft(f.getId(), false);
 				break;
 			}
 			break;
 			
 		case "RADIO":
 			for(RadioFile f : radioFiles) {
-				this.radioFileService.findOneIfOwner(f.getId());
+				this.radioFileService.findOneIfOwnerAndDraft(f.getId(), false);
 				break;
 			}
 			break;
 			
 		case "SOCIALNETWORK":
 			for(SocialNetworkFile f : socialNetworkFiles) {
-				this.socialNetworkFileService.findOneIfOwner(f.getId());
+				this.socialNetworkFileService.findOneIfOwnerAndDraft(f.getId(), false);
 				break;
 			}
 			break;

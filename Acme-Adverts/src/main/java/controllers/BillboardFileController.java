@@ -49,7 +49,7 @@ public class BillboardFileController extends AbstractController {
 	public ModelAndView display(@RequestParam final int Id) {
 		ModelAndView result = new ModelAndView("billboardFile/display");
 		try {
-			BillboardFile billboardFile = this.billboardFileService.findOneIfOwner(Id);
+			BillboardFile billboardFile = this.billboardFileService.findOneIfOwnerAndDraft(Id, false);
 			result.addObject("billboardFile", billboardFile);
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/welcome/index.do");
@@ -64,7 +64,7 @@ public class BillboardFileController extends AbstractController {
 	public ModelAndView editt(@RequestParam final int Id) {
 		ModelAndView result = new ModelAndView("billboardFile/edit");
 		try {
-			BillboardFile billboardFile = this.billboardFileService.findOneIfOwnerAndDraft(Id);
+			BillboardFile billboardFile = this.billboardFileService.findOneIfOwnerAndDraft(Id, true);
 			result.addObject("billboardFile", billboardFile);
 		} catch (final Throwable opps) {
 			result = new ModelAndView("redirect:/welcome/index.do");

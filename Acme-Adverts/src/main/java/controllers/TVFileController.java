@@ -51,7 +51,7 @@ public class TVFileController extends AbstractController {
 	public ModelAndView display(@RequestParam final int Id) {
 		ModelAndView result;
 		try {
-			TVFile TVFile = this.TVFileService.findOneIfOwner(Id);
+			TVFile TVFile = this.TVFileService.findOneIfOwnerAndDraft(Id, false);
 			result = new ModelAndView("TVFile/display");
 			result.addObject("TVFile", TVFile);
 		} catch (final Throwable oops) {
@@ -67,7 +67,7 @@ public class TVFileController extends AbstractController {
 	public ModelAndView editt(@RequestParam final int Id) {
 		ModelAndView result;
 		try {
-			TVFile TVFile = this.TVFileService.findOneIfOwnerAndDraft(Id);
+			TVFile TVFile = this.TVFileService.findOneIfOwnerAndDraft(Id, true);
 			result = new ModelAndView("TVFile/edit");
 			result.addObject("TVFile", TVFile);
 		} catch (final Throwable opps) {

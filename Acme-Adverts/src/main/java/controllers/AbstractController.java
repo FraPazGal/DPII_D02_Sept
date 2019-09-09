@@ -51,7 +51,7 @@ public class AbstractController {
 
 	@ModelAttribute("breachNotification")
 	public Map<String, String> getBreachNotification(final Model model) {
-		final Map<String, String> res = this.systemConfigurationService.findBreachNotification();
+		final Map<String, String> res = this.systemConfigurationService.findMySystemConfiguration().getBreachNotification();
 
 		return res;
 	}

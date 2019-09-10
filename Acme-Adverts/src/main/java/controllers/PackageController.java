@@ -29,7 +29,7 @@ public class PackageController extends AbstractController {
 	private ActorService	actorService;
 
 
-	@RequestMapping(value = "/manager/list", method = RequestMethod.GET)
+	@RequestMapping(value = "/manage/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;
 		Collection<domain.Package> packages;
@@ -69,7 +69,7 @@ public class PackageController extends AbstractController {
 	// Create
 	// ----------------------------------------------------------------------
 
-	@RequestMapping(value = "/manager/create", method = RequestMethod.GET)
+	@RequestMapping(value = "/manage/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
 		PackageForm packageD;
@@ -103,7 +103,7 @@ public class PackageController extends AbstractController {
 	}
 	// Save ------------------------------------------------------------
 
-	@RequestMapping(value = "/manager/edit", method = RequestMethod.GET)
+	@RequestMapping(value = "/manage/edit", method = RequestMethod.GET)
 	public ModelAndView editt(@RequestParam final int Id) {
 		ModelAndView result;
 		domain.Package packageD;
@@ -120,7 +120,7 @@ public class PackageController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/manager/edit", method = RequestMethod.POST, params = "saveFinal")
+	@RequestMapping(value = "/manage/edit", method = RequestMethod.POST, params = "saveFinal")
 	public ModelAndView saveFinal(final PackageForm packageF, final BindingResult binding) {
 		ModelAndView result;
 		domain.Package packageD;
@@ -144,7 +144,7 @@ public class PackageController extends AbstractController {
 
 	}
 
-	@RequestMapping(value = "/manager/edit", method = RequestMethod.POST, params = "save")
+	@RequestMapping(value = "/manage/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView saveDraft(final PackageForm packageF, final BindingResult binding) {
 		ModelAndView result;
 		domain.Package packageD;
@@ -170,7 +170,7 @@ public class PackageController extends AbstractController {
 
 	// Delete ------------------------------------------------------------
 
-	@RequestMapping(value = "/manager/delete", method = RequestMethod.GET)
+	@RequestMapping(value = "/manage/delete", method = RequestMethod.GET)
 	public ModelAndView delete(@RequestParam final int Id) {
 		ModelAndView result;
 		try {

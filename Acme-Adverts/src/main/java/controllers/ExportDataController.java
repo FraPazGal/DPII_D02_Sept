@@ -59,7 +59,7 @@ public class ExportDataController extends AbstractController {
 
 	}
 
-	@RequestMapping(value = "manager/export.do", method = RequestMethod.GET)
+	@RequestMapping(value = "manage/export.do", method = RequestMethod.GET)
 	public @ResponseBody
 	void downloadFileManager(final HttpServletResponse resp) {
 		final String downloadFileName = "dataUser";

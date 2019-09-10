@@ -152,7 +152,7 @@ public class FinderController extends AbstractController {
 		}
 		return result;
 	}
-	@RequestMapping(value = "/manager/display", method = RequestMethod.GET)
+	@RequestMapping(value = "/manage/display", method = RequestMethod.GET)
 	public ModelAndView finderStatistic() {
 		ModelAndView result;
 		List<String> packs = new ArrayList<>();

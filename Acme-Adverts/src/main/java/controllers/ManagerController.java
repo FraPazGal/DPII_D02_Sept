@@ -55,7 +55,7 @@ public class ManagerController extends AbstractController {
 
 	//edit
 
-	@RequestMapping(value = "/manager/edit", method = RequestMethod.GET)
+	@RequestMapping(value = "/manage/edit", method = RequestMethod.GET)
 	public ModelAndView editAuditor() {
 		ModelAndView result;
 		Manager manager;
@@ -71,7 +71,7 @@ public class ManagerController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/manager/edit", method = RequestMethod.POST, params = "save")
+	@RequestMapping(value = "/manage/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView edit(@Valid final EditionFormObject editionFormObject, final BindingResult binding) {
 
 		ModelAndView result;

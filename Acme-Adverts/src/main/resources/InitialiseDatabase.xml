@@ -52,12 +52,12 @@
 			<util:map id="utilmap0" map-class="java.util.HashMap"
 				key-type="java.lang.String" value-type="java.lang.String">
 				<entry key="SP"
-					value="“¡Bienvenidos a Acme Billboards! Publicítese con nosotros por mucho menos de los que piensa" />
+					value="“¡Bienvenidos a Acme Adverts! Es hora de llegar más allá de los carteles" />
 				<entry key="EN"
-					value="Welcome to Acme Billboards, Advertise with us for a lot less than you think it might cost!" />
+					value="Welcome to Acme Adverts! It's time to reach beyond the billboards!" />
 			</util:map>
 		</property>
-		<property name="banner" value="https://tinyurl.com/acme-billboards" />
+		<property name="banner" value="https://i.ibb.co/ZxXQz58/Untitled.png" />
 		<property name="countryCode" value="+034" />
 		<property name="timeResultsCached" value="1" />
 		<property name="maxResults" value="10" />

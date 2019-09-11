@@ -19,12 +19,16 @@
 		<br>
 		<form:hidden path="id" />
 		<form:select path="type">
-			<form:options items="${types}"/>
+			<form:option value="${types[0]}"><spring:message code="file.billboard" /></form:option>
+			<form:option value="${types[1]}"><spring:message code="file.TV" /></form:option>
+			<form:option value="${types[2]}"><spring:message code="file.radio" /></form:option>
+			<form:option value="${types[3]}"><spring:message code="file.socialNetwork" /></form:option>
+			<form:option value="${types[4]}"><spring:message code="file.info" /></form:option>
 		</form:select>
 	</fieldset>
 	<br />
 	
 	<acme:submit code="file.select" name="select" />&nbsp;
-	<acme:cancel code="file.back" url="contract/display.do?Id=${backId}" />
+	<acme:cancel code="file.cancel" url="contract/display.do?Id=${backId}" />
 	<br />
 </form:form>

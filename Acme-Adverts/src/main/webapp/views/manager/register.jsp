@@ -217,7 +217,7 @@
 	<!-- Buttons -->
 	<input type="submit" name="save"
 		value="<spring:message code="form.save" />" />
-	<acme:cancel code="package.back" url="/" />
+	<acme:cancel code="form.cancel" url="/" />
 
 </form:form>
 </security:authorize>

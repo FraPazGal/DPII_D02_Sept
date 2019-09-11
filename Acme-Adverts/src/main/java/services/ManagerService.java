@@ -110,6 +110,7 @@ public class ManagerService {
 			Assert.isTrue(principal.getId() == manager.getId(), "no.permission");
 			res.setUserAccount(principal.getUserAccount());
 			res.setId(principal.getId());
+			res.setVersion(principal.getVersion());
 		}
 		res.setName(manager.getName());
 		res.setSurname(manager.getSurname());

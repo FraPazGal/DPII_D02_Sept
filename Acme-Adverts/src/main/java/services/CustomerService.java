@@ -121,6 +121,7 @@ public class CustomerService {
 			Assert.isTrue(principal.getId() == customer.getId(), "no.permission");
 			res.setUserAccount(principal.getUserAccount());
 			res.setId(principal.getId());
+			res.setVersion(principal.getVersion());
 		}
 		res.setName(customer.getName());
 		res.setSurname(customer.getSurname());

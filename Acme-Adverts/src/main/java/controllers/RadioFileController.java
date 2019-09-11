@@ -50,7 +50,7 @@ public class RadioFileController extends AbstractController {
 	public ModelAndView display(@RequestParam final int Id) {
 		ModelAndView result = new ModelAndView("radioFile/display");
 		try {
-			RadioFile radioFile = this.radioFileService.findOneIfOwnerAndDraft(Id, false);
+			RadioFile radioFile = this.radioFileService.findOneToDisplay(Id);
 			result.addObject("radioFile", radioFile);
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/welcome/index.do");

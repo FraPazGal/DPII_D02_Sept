@@ -49,7 +49,7 @@ public class BillboardFileController extends AbstractController {
 	public ModelAndView display(@RequestParam final int Id) {
 		ModelAndView result = new ModelAndView("billboardFile/display");
 		try {
-			BillboardFile billboardFile = this.billboardFileService.findOneIfOwnerAndDraft(Id, false);
+			BillboardFile billboardFile = this.billboardFileService.findOneToDisplay(Id);
 			result.addObject("billboardFile", billboardFile);
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/welcome/index.do");

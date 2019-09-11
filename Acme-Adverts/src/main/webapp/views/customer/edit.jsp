@@ -27,7 +27,8 @@
 		action="customer/customer/edit.do"
 		onsubmit="javascript: return checkPhone('${confirmTelephone}');">
 		<form:hidden path="id" />
-
+		<form:hidden path="version" />
+		
 		<!-- User Account Attributes -->
 
 		<br />

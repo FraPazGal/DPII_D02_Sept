@@ -15,6 +15,7 @@
 		<fieldset>
 			<br>
 			<form:hidden path="id" />
+			<form:hidden path="version" />
 			<form:hidden path="request" />
 			
 			<acme:textarea code="contract.text" path="text" cols="70px" rows="15"/><br/>

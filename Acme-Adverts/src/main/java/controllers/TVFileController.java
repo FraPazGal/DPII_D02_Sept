@@ -51,7 +51,7 @@ public class TVFileController extends AbstractController {
 	public ModelAndView display(@RequestParam final int Id) {
 		ModelAndView result;
 		try {
-			TVFile TVFile = this.TVFileService.findOneIfOwnerAndDraft(Id, false);
+			TVFile TVFile = this.TVFileService.findOneToDisplay(Id);
 			result = new ModelAndView("TVFile/display");
 			result.addObject("TVFile", TVFile);
 		} catch (final Throwable oops) {

@@ -17,81 +17,174 @@
 		<tr>
 			<td style="text-align: right"><script
 					src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
-
-				<canvas id="myChart" width="100" height="100"></canvas> <script>
-					var pack = ${packages};
-					var cpack = ${requests};
-					var packs = []
-					for ( var n = 0; n < pack.length; n++) {
-						packs.push(pack[n].toString());
-					}
-					function pushColor(packs) {
-						var colors = [];
-						var len = pack;
-						for ( var i = 0; i < len.length; i++) {
-							colors.push(getRandomColor());
-						}
-						return colors;
-					}
-					function getRandomColor() {
-						var letters = '789ABCD'.split('');
-						var color = '#';
-						for ( var i = 0; i < 6; i++) {
-							color += letters[Math.round(Math.random() * 6)];
-						}
-						return color;
-					}
-
-					new Chart(document.getElementById("myChart"), {
-						type : 'bar',
-						data : {
-							labels : packs,
-							datasets : [
-								{
-									label : "Result finders per package",
-									backgroundColor : pushColor(packs),
-									data : cpack,
-									borderColor : pushColor(),
-									borderWidth : 1
-								}
-							]
-						},
-						options : {
-							title : {
-								display : true,
-								text : 'How many times it is the package displayed a finder'
-							},scales : {
-								yAxes : [ {
-									ticks : {
-										beginAtZero : true
-									}
-								} ]
-							},
-							
-							maintainAspectRatio : true,
-							responsive : true,
-
-							legend : {
-								display : true,
-								position : 'right',
-								labels : {
-									fontColor : '#000'
-								}
-							},
-							layout : {
-								padding : {
-									left : 0,
-									right : 0,
-									bottom : 300,
-									top : 0
-								}
-							},
-							tooltips : {
-								enabled : true
+				<jstl:choose>
+					<jstl:when test="${pageContext.response.locale.language == 'es'}">
+						<canvas id="myChart" width="100" height="100"></canvas>
+						<script>
+							var pack = $
+							{
+								packages
+							};
+							var cpack = $
+							{
+								requests
+							};
+							var packs = []
+							for ( var n = 0; n < pack.length; n++) {
+								packs.push(pack[n].toString());
 							}
-						}
-					});
-				</script></td>
+							function pushColor(packs) {
+								var colors = [];
+								var len = pack;
+								for ( var i = 0; i < len.length; i++) {
+									colors.push(getRandomColor());
+								}
+								return colors;
+							}
+							function getRandomColor() {
+								var letters = '789ABCD'.split('');
+								var color = '#';
+								for ( var i = 0; i < 6; i++) {
+									color += letters[Math.round(Math.random() * 6)];
+								}
+								return color;
+							}
+							new Chart(document.getElementById("myChart"), {
+								type : 'bar',
+								data : {
+									labels : packs,
+									datasets : [
+										{
+											label : "Resultado de los buscadores por paquete",
+											backgroundColor : pushColor(packs),
+											data : cpack,
+											borderColor : pushColor(),
+											borderWidth : 1
+										}
+									]
+								},
+								options : {
+									title : {
+										display : true,
+										text : 'Cuantas veces es mostrado el paquete en un finder'
+									},
+									scales : {
+										yAxes : [
+											{
+												ticks : {
+													beginAtZero : true
+												}
+											}
+										]
+									},
+									maintainAspectRatio : true,
+									responsive : true,
+									legend : {
+										display : true,
+										position : 'right',
+										labels : {
+											fontColor : '#000'
+										}
+									},
+									layout : {
+										padding : {
+											left : 0,
+											right : 0,
+											bottom : 300,
+											top : 0
+										}
+									},
+									tooltips : {
+										enabled : true
+									}
+								}
+							});
+						</script>
+					</jstl:when>
+					<jstl:otherwise>
+						<canvas id="myChart" width="100" height="100"></canvas>
+						<script>
+							var pack = $
+							{
+								packages
+							};
+							var cpack = $
+							{
+								requests
+							};
+							var packs = []
+							for ( var n = 0; n < pack.length; n++) {
+								packs.push(pack[n].toString());
+							}
+							function pushColor(packs) {
+								var colors = [];
+								var len = pack;
+								for ( var i = 0; i < len.length; i++) {
+									colors.push(getRandomColor());
+								}
+								return colors;
+							}
+							function getRandomColor() {
+								var letters = '789ABCD'.split('');
+								var color = '#';
+								for ( var i = 0; i < 6; i++) {
+									color += letters[Math.round(Math.random() * 6)];
+								}
+								return color;
+							}
+							new Chart(document.getElementById("myChart"), {
+								type : 'bar',
+								data : {
+									labels : packs,
+									datasets : [
+										{
+											label : "Result finders per package",
+											backgroundColor : pushColor(packs),
+											data : cpack,
+											borderColor : pushColor(),
+											borderWidth : 1
+										}
+									]
+								},
+								options : {
+									title : {
+										display : true,
+										text : 'How many times it is the package displayed a finder'
+									},
+									scales : {
+										yAxes : [
+											{
+												ticks : {
+													beginAtZero : true
+												}
+											}
+										]
+									},
+									maintainAspectRatio : true,
+									responsive : true,
+									legend : {
+										display : true,
+										position : 'right',
+										labels : {
+											fontColor : '#000'
+										}
+									},
+									layout : {
+										padding : {
+											left : 0,
+											right : 0,
+											bottom : 300,
+											top : 0
+										}
+									},
+									tooltips : {
+										enabled : true
+									}
+								}
+							});
+						</script>
+					</jstl:otherwise>
+				</jstl:choose></td>
 		</tr>
 	</table>
 </security:authorize>

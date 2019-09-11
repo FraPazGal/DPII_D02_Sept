@@ -63,6 +63,16 @@ public class RadioFileService {
 		return this.radioFileRepository.findAllRadioFileByContract(contract.getId());
 	}
 	
+	public RadioFile findOneToDisplay(final int id) {
+		final RadioFile radioFile = this.radioFileRepository.findOne(id);
+		final Actor principal = this.actorService.findByPrincipal();
+		if(!this.actorService.checkAuthority(principal, "MANAGER")) {
+			Assert.isTrue(radioFile.getContract().getSignedManager() != null, "not allowed");
+		}
+		Assert.isTrue(radioFile.getContract().getRequest().getCustomer().getId() == principal.getId() || radioFile.getContract().getRequest().getPack().getManager().getId() == principal.getId());
+		return radioFile;
+	}
+	
 	public RadioFile findOneIfOwnerAndDraft(final int id, boolean draft) {
 		final RadioFile radioFile = this.radioFileRepository.findOne(id);
 		final Actor principal = this.actorService.findByPrincipal();

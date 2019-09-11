@@ -27,6 +27,7 @@
 		action="administrator/administrator/edit.do"
 		onsubmit="javascript: return checkPhone('${confirmTelephone}');">
 		<form:hidden path="id" />
+		<form:hidden path="version" />
 		<!-- User Account Attributes -->
 		<fieldset disabled="disabled">
 			<legend style="font-size: 21px">

@@ -86,6 +86,7 @@ public class AdministratorService {
 			administrator.setUserAccount(principal.getUserAccount());
 			res.setUserAccount(principal.getUserAccount());
 			res.setId(principal.getId());
+			res.setVersion(principal.getVersion());
 		}
 		res.setName(administrator.getName());
 		res.setSurname(administrator.getSurname());

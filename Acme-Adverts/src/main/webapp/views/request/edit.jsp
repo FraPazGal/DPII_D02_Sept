@@ -25,6 +25,7 @@
 		<fieldset>
 			<br>
 			<form:hidden path="id" />
+			<form:hidden path="version" />
 			<form:hidden path="pack" />
 
 			<security:authorize access="hasRole('CUSTOMER')">

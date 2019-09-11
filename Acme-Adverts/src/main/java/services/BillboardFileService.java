@@ -69,6 +69,16 @@ public class BillboardFileService {
 		return this.billboardFileRepository.findAllFilesByContract(contractId);
 	}
 	
+	public BillboardFile findOneToDisplay(final int id) {
+		final BillboardFile billboardFile = this.billboardFileRepository.findOne(id);
+		final Actor principal = this.actorService.findByPrincipal();
+		if(!this.actorService.checkAuthority(principal, "MANAGER")) {
+			Assert.isTrue(billboardFile.getContract().getSignedManager() != null, "not allowed");
+		}
+		Assert.isTrue(billboardFile.getContract().getRequest().getCustomer().getId() == principal.getId() || billboardFile.getContract().getRequest().getPack().getManager().getId() == principal.getId());
+		return billboardFile;
+	}
+	
 	public BillboardFile findOneIfOwnerAndDraft(final int id, boolean draft) {
 		final BillboardFile billboardFile = this.billboardFileRepository.findOne(id);
 		final Actor principal = this.actorService.findByPrincipal();

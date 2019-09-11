@@ -63,6 +63,16 @@ public class TVFileService {
 		return this.TVFileRepository.findAllTVFileByContract(contract.getId());
 	}
 	
+	public TVFile findOneToDisplay(final int id) {
+		final TVFile TVFile = this.TVFileRepository.findOne(id);
+		final Actor principal = this.actorService.findByPrincipal();
+		if(!this.actorService.checkAuthority(principal, "MANAGER")) {
+			Assert.isTrue(TVFile.getContract().getSignedManager() != null, "not allowed");
+		}
+		Assert.isTrue(TVFile.getContract().getRequest().getCustomer().getId() == principal.getId() || TVFile.getContract().getRequest().getPack().getManager().getId() == principal.getId());
+		return TVFile;
+	}
+	
 	public TVFile findOneIfOwnerAndDraft(final int id, boolean draft) {
 		final TVFile TVFile = this.TVFileRepository.findOne(id);
 		final Actor principal = this.actorService.findByPrincipal();
